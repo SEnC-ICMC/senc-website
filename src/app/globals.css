@@ -5,11 +5,15 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Configure your brand theme here */
+@theme {
+  /* --color-[logical-name]: [hex-or-rgb-value]; */
+  --color-brand-green: #28A745;    
+  --color-brand-dark: #343A40; /* e.g., The main blue button color */
+  --color-brand-light: #F8F9FA;   /* e.g., The main background color */
+  --color-bg-brand-dark: #212529; /* e.g., The main background color for dark mode */
+  --color-text-brand-dark: #E9ECEF; /* e.g., The main text color for dark mode */
+  --color-bg-brand-light: #F8F9FA; /* e.g., The main background color for light mode */
 }
 
 @media (prefers-color-scheme: dark) {
