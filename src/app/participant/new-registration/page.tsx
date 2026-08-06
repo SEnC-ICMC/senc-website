@@ -29,7 +29,7 @@ export default function NovaInscricao() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-6">
       <div className="max-w-xl w-full bg-white p-10 rounded-xl shadow-lg border border-gray-100 text-center">
         <h1 className="text-3xl font-black text-gray-900 mb-2 uppercase">
-          Nova Inscrição
+          Inscrição
         </h1>
         <p className="text-gray-600 mb-8">
           Utilize seu e-mail institucional ou conta Google para se cadastrar na X SEnC.

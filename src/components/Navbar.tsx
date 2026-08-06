@@ -44,7 +44,7 @@ export default function Navbar() {
             href="/participant/new-registration" 
             className="bg-green-500 text-brand-dark px-6 py-2.5 rounded-full font-extrabold uppercase text-sm tracking-wide shadow-md transition hover:scale-105 hover:bg-green-600"
           >
-            Inscrição
+            Área do Participante
           </Link>
         </div>
       </div>
