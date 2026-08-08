@@ -25,21 +25,28 @@ export default function Navbar() {
             ======================================================================== */}
         <div className="flex gap-4 md:gap-8 items-center">
           
-          {/* Minimalist text links - Smooth color transition on hover */}
           <Link href="/#hero" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Home
           </Link>
+          
           <Link href="/#countdown" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Sobre
           </Link>
-          <Link href="/#offerings" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
-            Atividades
+          
+          {/* THE NEW AGENDA ROUTE */}
+          <Link href="/schedule" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Programação
           </Link>
+          
           <Link href="/#sponsors" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Patrocinadores
           </Link>
 
-          {/* Prominent CTA 'Button' - Green background, bold uppercase text, grows on hover */}
+          <Link href="/#contact" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Contato
+          </Link>
+
+          {/* Prominent CTA 'Button' */}
           <Link 
             href="/participant/new-registration" 
             className="bg-green-500 text-brand-dark px-6 py-2.5 rounded-full font-extrabold uppercase text-sm tracking-wide shadow-md transition hover:scale-105 hover:bg-green-600"
