@@ -2,11 +2,18 @@ import Image from "next/image";
 import Link from "next/link";
 import ContactForm from '../components/ContactForm';
 
-// Temporary mock data until the backend is ready
-const sponsorLogos = [
-  '/sponsors/eesc.png', '/sponsors/icmc.png', '/sponsors/ime.png',
-  '/sponsors/usp-online.png',
-  '/sponsors/fipai.png', '/sponsors/opus.png', '/sponsors/placeholder.png'
+// 1. SPLIT YOUR MOCK DATA INTO TWO ARRAYS
+const realizadores = [
+  '/sponsors/usp.png',
+  '/sponsors/icmc.png',
+  '/sponsors/eesc.png',
+];
+
+const patrocinadores = [
+  '/sponsors/motorola.svg', // Replace with your actual paths
+  '/sponsors/phelcom.svg',
+  '/sponsors/opus.png',
+  '/sponsors/lwart.png',
 ];
 
 export default function Home() {
@@ -24,7 +31,7 @@ export default function Home() {
         
         {/* The Actual Image (public/hero-fair.jpg) */}
         <Image 
-          src="/bg-hero-test.jpeg" // Placeholder image
+          src="/foto-senc-25-bg.jpg" // Placeholder image
           alt="University Tech Fair Scene"
           fill
           className="object-cover"
@@ -62,7 +69,7 @@ export default function Home() {
       <section id="countdown" className="w-full bg-white text-brand-dark py-24 flex flex-col items-center px-6">
         <h2 className="text-xl font-bold uppercase tracking-widest text-gray-500 mb-2">#SAVETHEDATE</h2>
         <h3 className="text-4xl md:text-5xl font-extrabold mb-8 text-center">
-          CONTE CADA SEGUNDO <br className="hidden md:inline"/>PARA A IX SENC
+          CONTE CADA SEGUNDO <br className="hidden md:inline"/>PARA A X SENC
         </h3>
 
         {/* The Introduction Paragraph */}
@@ -103,41 +110,56 @@ export default function Home() {
 
       {/* 
         ========================================================================
-        4. SPONSORS HUB (Match id="sponsors")
-        Blueprint Ref: image_2.png (Patrocinadores Hub Grid)
-        Tailwind Key: grid-cols-2 md:grid-cols-4 lg:grid-cols-6, grayscale-hover
+        4. SPONSORS & PARTNERS HUB
+        Now split into Realização (Infrastructure) and Patrocínio (Financial)
         ======================================================================== 
       */}
       <section id="sponsors" className="w-full bg-gray-100 py-32 flex flex-col items-center">
-        <h2 className="text-xl font-bold uppercase tracking-widest text-gray-500 mb-2">Patrocinadores 2025</h2>
-        <p className="text-gray-700 max-w-xl text-center mb-16">
-          Conheça as empresas e instituições que acreditam no potencial da engenharia de computação.
+        <h2 className="text-xl font-bold uppercase tracking-widest text-gray-500 mb-2">Parcerias 2026</h2>
+        <p className="text-gray-700 max-w-xl text-center mb-16 px-6">
+          Conheça as instituições e empresas que tornam a X SEnC possível.
         </p>
 
-        {/* --- GRID UPDATES FOR BIGGER LOGOS --- */}
-        {/* We reduced column counts on mobile/tablet so the bigger logos don't stack weirdly */}
-        {/* 1 col on mobile, 2 on sm, 3 on md, 4 on lg, 5 on xl */}
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-24 justify-items-center items-center">
-          
-          {sponsorLogos.map((logoPath, index) => (
-            
-            // --- THE VISUAL WRAPPER UPDATES ---
-            // WAS: w-40 h-24 (160x96px)
-            // NOW: w-64 h-40 (256x160px) - Significant Highlight!
+        {/* --- BLOCK 1: PATROCINADORES (Moved to Top & Made Larger) --- */}
+        <h3 className="text-3xl font-black text-gray-900 uppercase tracking-widest mb-8">Patrocínio</h3>
+        
+        {/* Larger gap, larger boxes for premium sponsors */}
+        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-12 md:gap-16 items-center mb-24">
+          {patrocinadores.map((logoPath, index) => (
             <div 
-              key={index} 
-              className="w-64 h-40 flex items-center justify-center p-6 bg-white rounded-xl shadow-lg border border-gray-100 transition hover:shadow-2xl hover:-translate-y-1 duration-300"
+              key={`patrocinador-${index}`} 
+              // INCREASED SIZE: w-72 h-48 (288px by 192px) with p-8 padding
+              className="w-64 h-40 flex items-center justify-center p-8 bg-white rounded-xl shadow-lg border border-gray-100 transition hover:shadow-2xl hover:-translate-y-1 duration-300"
             >
-              
-              {/* Image tag stays object-contain - it will grow to fill the new w-64 h-40 box */}
               <img 
                 src={logoPath} 
-                alt={`Sponsor Logo ${index + 1}`} 
-                className="max-h-full max-w-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                alt={`Patrocinador ${index + 1}`} 
+                className="w-full h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </div>
           ))}
         </div>
+
+        {/* --- BLOCK 2: REALIZADORES (Moved to Bottom & Made Smaller) --- */}
+        <h3 className="text-xl font-black text-gray-600 uppercase tracking-widest mb-8">Realização</h3>
+        
+        {/* Smaller gap, smaller boxes for institutional partners */}
+        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-8 items-center">
+          {realizadores.map((logoPath, index) => (
+            <div 
+              key={`realizador-${index}`} 
+              // DECREASED SIZE: w-56 h-36 (224px by 144px) with p-5 padding
+              className="w-56 h-36 flex items-center justify-center p-5 bg-white rounded-xl shadow-md border border-gray-100 transition hover:shadow-xl hover:-translate-y-1 duration-300"
+            >
+              <img 
+                src={logoPath} 
+                alt={`Realização ${index + 1}`} 
+                className="w-full h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+              />
+            </div>
+          ))}
+        </div>
+
       </section>
 
       {/* 
