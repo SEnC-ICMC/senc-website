@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-brand-light text-gray-900`}>
+      <body className={`${inter.className} bg-brand-light text-gray-900 overflow-x-hidden`}>
         <Navbar /> {/* <-- Add your component here */}
         <main className="min-h-screen">
           {children} {/* This is where page.tsx gets injected */}
