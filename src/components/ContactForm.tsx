@@ -1,4 +1,3 @@
-// src/components/ContactForm.tsx
 "use client"; // CRITICAL: This allows useState and form logic in Next.js App Router
 
 import { useState } from "react";
@@ -74,66 +73,66 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       
-      {/* NOME COMPLETO (Blueprint Ref: Form State) */}
+      {/* NOME COMPLETO */}
       <div>
-        <label htmlFor="nome" className="block text-sm font-semibold text-gray-700">Nome Completo</label>
+        <label htmlFor="nome" className="block text-bg font-semibold text-gray-200">Nome Completo</label>
         <input 
           type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange}
-          className={`mt-1 block w-full p-3 rounded-md border ${errors.nome ? 'border-red-500' : 'border-gray-200'} bg-gray-50 focus:ring-2 focus:ring-green-400/50 focus:border-green-400`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.nome ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
-        {errors.nome && <p className="mt-1 text-sm text-red-500 font-bold uppercase tracking-tight">{errors.nome}</p>}
+        {errors.nome && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.nome}</p>}
       </div>
 
-      {/* EMAIL (Blueprint Ref: Form State with validation flow) */}
+      {/* EMAIL */}
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold text-gray-700">Email</label>
+        <label htmlFor="email" className="block text-bg font-semibold text-gray-200">Email</label>
         <input 
           type="email" id="email" name="email" value={formData.email} onChange={handleChange}
-          className={`mt-1 block w-full p-3 rounded-md border ${errors.email ? 'border-red-500' : 'border-gray-200'} bg-gray-50 focus:ring-2 focus:ring-green-400/50 focus:border-green-400`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
-        {errors.email && <p className="mt-1 text-sm text-red-500 font-bold uppercase tracking-tight">{errors.email}</p>}
+        {errors.email && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.email}</p>}
       </div>
 
-      {/* TELEFONE (Blueprint Ref: Form State) */}
+      {/* TELEFONE */}
       <div>
-        <label htmlFor="telefone" className="block text-sm font-semibold text-gray-700">Telefone para Contato</label>
+        <label htmlFor="telefone" className="block text-bg font-semibold text-gray-200">Telefone para Contato</label>
         <input 
           type="tel" id="telefone" name="telefone" value={formData.telefone} onChange={handleChange}
-          className={`mt-1 block w-full p-3 rounded-md border ${errors.telefone ? 'border-red-500' : 'border-gray-200'} bg-gray-50 focus:ring-2 focus:ring-green-400/50 focus:border-green-400`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.telefone ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
-        {errors.telefone && <p className="mt-1 text-sm text-red-500 font-bold uppercase tracking-tight">{errors.telefone}</p>}
+        {errors.telefone && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.telefone}</p>}
       </div>
 
-      {/* MENSAGEM (Blueprint Ref: Form State) */}
+      {/* MENSAGEM */}
       <div>
-        <label htmlFor="mensagem" className="block text-sm font-semibold text-gray-700">Sua Mensagem</label>
+        <label htmlFor="mensagem" className="block text-bg font-semibold text-gray-200">Sua Mensagem</label>
         <textarea 
           id="mensagem" name="mensagem" value={formData.mensagem} onChange={handleChange} rows={5}
-          className={`mt-1 block w-full p-3 rounded-md border ${errors.mensagem ? 'border-red-500' : 'border-gray-200'} bg-gray-50 focus:ring-2 focus:ring-green-400/50 focus:border-green-400`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.mensagem ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
-        {errors.mensagem && <p className="mt-1 text-sm text-red-500 font-bold uppercase tracking-tight">{errors.mensagem}</p>}
+        {errors.mensagem && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.mensagem}</p>}
       </div>
 
-      {/* SUBMIT BUTTON (Blueprint Ref: Call-to-Action) */}
+      {/* SUBMIT BUTTON */}
       <div>
         <button 
           type="submit" 
           disabled={status === 'submitting'}
-          className="w-full bg-green-500 text-brand-dark px-6 py-3 rounded-md font-extrabold uppercase shadow-lg transition hover:bg-green-600 focus:ring-4 focus:ring-green-300 disabled:bg-gray-400"
+          className="w-full bg-[#07D46A] text-[#0D1713] px-6 py-3 rounded-xl font-bold uppercase shadow-lg transition-all duration-300 hover:bg-green-500 hover:scale-105 disabled:bg-gray-600 disabled:hover:scale-100 disabled:cursor-not-allowed"
         >
           {status === 'submitting' ? 'Enviando...' : 'Enviar Mensagem'}
         </button>
       </div>
 
-      {/* Global Status Display (Success/Green pop-up color ref from image_2.png) */}
+      {/* Global Status Display */}
       {status === 'success' && (
-        <div className="mt-4 p-4 bg-green-100 border border-green-300 text-green-900 rounded-md font-semibold text-center">
+        <div className="mt-4 p-4 bg-green-900/30 border border-[#07D46A]/50 text-[#07D46A] rounded-lg font-semibold text-center">
           ✅ Mensagem enviada com sucesso!
         </div>
       )}
       {status === 'error' && (
-        <div className="mt-4 p-4 bg-red-100 border border-red-300 text-red-900 rounded-md font-semibold text-center">
-          ❌ Tente novamente! (Submission Failed)
+        <div className="mt-4 p-4 bg-red-900/30 border border-red-500/50 text-red-400 rounded-lg font-semibold text-center">
+          ❌ Tente novamente! (Falha no envio)
         </div>
       )}
     </form>

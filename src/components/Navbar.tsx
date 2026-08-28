@@ -31,27 +31,34 @@ export default function Navbar() {
     };
   }, []);
 
-  return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 sticky top-0 z-50">
+return (
+    <nav className="relative bg-gradient-to-r from-[#07D46A]/20 via-[#7634CA]/20 to-[#0015E2]/20 backdrop-blur-md border-b border-white/10 px-6 py-4 sticky top-0 z-50">
+      
+      {/* Camada da Textura (Background Pattern) */}
+      <div className="absolute inset-0 z-[-1] opacity-10 bg-[url('/waves.png')] bg-repeat pointer-events-none"></div>
+
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         
         {/* Logo */}
-        <Link href="/" className="font-black text-2xl text-gray-900 tracking-tight">
-          SEnC<span className="text-blue-600">.2026</span>
+        <Link href="/" className="flex items-center gap-3 font-black text-2xl text-white tracking-tight">
+          <img src="/logo-senc.png" alt="Logo SEnC" className="w-10 h-10 object-contain" />
+          <div>
+            SEnC<span className="text-[#07D46A]">.2026</span>
+          </div>
         </Link>
         
         {/* ========================================= */}
         {/* DESKTOP MENU: Hidden on mobile (hidden md:flex) */}
         {/* ========================================= */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/programacao" className="font-medium text-gray-600 hover:text-gray-900 transition-colors">
+          <Link href="/programacao" className="font-medium text-[#9EAEA5] hover:text-white transition-colors">
             Programação
           </Link>
           
           {!isLoading && (
             <Link 
               href={isLoggedIn ? "/participante" : "/participante/nova-inscricao"}
-              className="bg-gray-900 hover:bg-gray-800 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg"
+              className="bg-white text-[#0D1713] font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all duration-300 hover:bg-[#9E6CDF] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(158,108,223,0.4)]"
             >
               Área do Participante
             </Link>
@@ -63,7 +70,7 @@ export default function Navbar() {
         {/* ========================================= */}
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+          className="md:hidden p-2 text-[#9EAEA5] hover:text-white focus:outline-none"
           aria-label="Toggle Menu"
         >
           {isMobileMenuOpen ? (
@@ -84,12 +91,12 @@ export default function Navbar() {
       {/* MOBILE DROPDOWN: Shows only if button is clicked */}
       {/* ========================================= */}
       {isMobileMenuOpen && (
-        <div className="md:hidden pt-4 pb-2 flex flex-col gap-4 border-t border-gray-100 mt-4 animate-in slide-in-from-top-2">
+        <div className="md:hidden pt-4 pb-2 flex flex-col gap-4 border-t border-[#1A2E25] mt-4 animate-in slide-in-from-top-2">
           
           <Link 
             href="/programacao" 
-            onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
-            className="font-medium text-gray-600 hover:text-gray-900 transition-colors block px-2 py-2"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-medium text-[#9EAEA5] hover:text-white transition-colors block px-2 py-2"
           >
             Programação
           </Link>
@@ -97,8 +104,8 @@ export default function Navbar() {
           {!isLoading && (
             <Link 
               href={isLoggedIn ? "/participante" : "/participante/nova-inscricao"}
-              onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
-              className="bg-gray-900 text-center hover:bg-gray-800 text-white font-medium text-sm px-5 py-3 rounded-xl shadow-md transition-all"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="bg-white text-center hover:bg-gray-200 text-[#0D1713] font-medium text-sm px-5 py-3 rounded-xl shadow-md transition-all"
             >
               Área do Participante
             </Link>

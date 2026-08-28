@@ -30,36 +30,40 @@ export default function Home() {
         Tailwind Key: relative, backdrop-blur, text-shadow-md
         ========================================================================
       */}
-      <section id="hero" className="relative w-full h-[80vh] flex flex-col items-center justify-center text-center overflow-hidden">
+      <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
         
-        {/* The Actual Image (public/hero-fair.jpg) */}
+        {/* Imagem de Fundo */}
         <Image 
-          src="/foto-senc-25-bg.jpg" // Placeholder image
+          src="/foto-senc-25-bg.jpg" 
           alt="University Tech Fair Scene"
           fill
           className="object-cover"
           quality={80}
-          priority // Prioritize loading this image for better performance
+          priority 
         />
 
-        {/* The Blurring Overlay Layer */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-10"></div>
+        {/* Camada de Desfoque (Mais escura para destacar o texto branco) */}
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-md z-10"></div>
 
-        {/* The Content (Over the blur) */}
-        <div className="relative z-20 max-w-4xl px-4 flex flex-col items-center text-white drop-shadow-lg">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold uppercase leading-tight">
-            X Semana da Engenharia de Computação
+        {/* Conteúdo Central */}
+        <div className="relative z-20 max-w-5xl px-4 flex flex-col items-center text-white drop-shadow-2xl -mt-24">
+          
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-tight tracking-tighter">
+            <span className="text-[#07D46A]">X</span> Semana da <br className="hidden md:block" /> Engenharia de Computação
           </h1>
-          <p className="mt-6 text-xl md:text-2xl font-semibold tracking-wide bg-brand-primary px-6 py-2 rounded-full">
+          
+          <p className="mt-8 text-lg md:text-2xl font-medium tracking-widest bg-white/10 backdrop-blur-md border border-white/20 px-8 py-3 rounded-full">
             21 a 25 de Setembro de 2026
           </p>
+          
           <Link 
             href="/participant/new-registration" 
-            className="mt-12 bg-green-500 text-brand-dark px-10 py-4 rounded-md text-2xl font-bold uppercase transition hover:scale-105 hover:bg-green-600 shadow-xl"
+            className="mt-12 bg-[#07D46A] text-[#0D1713] px-12 py-4 rounded-full text-xl font-bold uppercase shadow-lg transition-all duration-300 hover:bg-green-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(7,212,106,0.5)]"
           >
-            INSCREVA-SE
+            Inscreva-se
           </Link>
         </div>
+        
       </section>
 
       {/* 
@@ -172,36 +176,59 @@ export default function Home() {
         Tailwind Key: grid md:grid-cols-[1fr,2fr], bg-brand-light, dark grey text
         ======================================================================== 
       */}
-      <section id="contact" className="w-full bg-brand-light text-gray-900 py-32 flex flex-col items-center">
-        <h2 className="text-5xl font-black uppercase mb-16">Contato</h2>
+      <section id="contact" className="w-full bg-[#0D1713] text-white py-32 flex flex-col items-center relative overflow-hidden">
         
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[1fr,2fr] gap-12 w-full">
+        {/* Efeito de brilho de fundo (Glow) */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-[#07D46A] opacity-10 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <h2 className="text-5xl font-black uppercase mb-16 z-10 text-transparent bg-clip-text bg-gradient-to-r from-[#07D46A] to-white">
+          Contato
+        </h2>
+        
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[1fr,2fr] gap-12 w-full z-10">
           
-          {/* Column A: Direct Contact Details (Server Component Data) */}
-          <div className="bg-gray-100 p-8 rounded-lg shadow border border-gray-200 text-brand-dark">
-            <h3 className="text-xl font-bold mb-4">Informações de Contato</h3>
-            <p className="text-gray-700 mb-6">Estamos prontos para tirar suas dúvidas e receber sugestões.</p>
+          {/* Coluna A: Informações de Contato (Estilo Glassmorphism Escuro) */}
+          <div className="bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/10 text-gray-200">
+            <h3 className="text-2xl font-bold mb-4 text-white">Informações de Contato</h3>
+            <p className="text-gray-400 mb-8">Estamos prontos para tirar suas dúvidas e receber sugestões.</p>
             
-            <ul className="space-y-4">
-              <li><strong>Endereço:</strong> <br/>Av. Trab. São Carlense, 400<br/>Parque Arnold Schimidt<br/>São Carlos - SP 13566-590</li>
-              <li><strong>Email:</strong> <br/><a href="mailto:senc@icmc.usp.br" className="text-green-600 font-medium hover:underline">senc@icmc.usp.br</a></li>
-              <li><strong>Facebook:</strong> <br/><a href="https://facebook.com/senc.usp" target="_blank" rel="noreferrer" className="text-blue-700 font-medium hover:underline">facebook.com/senc.usp</a></li>
+            <ul className="space-y-6">
+              <li className="flex flex-col">
+                <span className="text-[#07D46A] font-bold uppercase tracking-wider text-sm mb-1">Endereço</span>
+                <span className="leading-relaxed">Av. Trab. São Carlense, 400<br/>Parque Arnold Schimidt<br/>São Carlos - SP 13566-590</span>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-[#07D46A] font-bold uppercase tracking-wider text-sm mb-1">Email</span>
+                <a href="mailto:senc@icmc.usp.br" className="hover:text-white transition-colors">senc@icmc.usp.br</a>
+              </li>
+              <li className="flex flex-col">
+                <span className="text-[#07D46A] font-bold uppercase tracking-wider text-sm mb-1">Facebook</span>
+                <a href="https://facebook.com/senc.usp" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">facebook.com/senc.usp</a>
+              </li>
             </ul>
           </div>
 
-          {/* Column B: The Interactive Form (Client Component Injection) */}
-          <div className="bg-white p-8 rounded-lg shadow-xl border border-gray-100">
-            {/* INJECTING THE CLIENT FORM HERE */}
+          {/* Coluna B: O Formulário Interativo */}
+          <div className="bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-[#07D46A]/20">
             <ContactForm /> 
           </div>
 
         </div>
       </section>
 
-      {/* Dummy background content so you can see the white background end */}
-      <div className="w-full bg-gray-50 py-32 text-center text-gray-400">
-        Introductory Section Placeholder
-      </div>
+      {/* 
+        ========================================================================
+        6. FOOTER 
+        ======================================================================== 
+      */}
+      <footer className="w-full bg-[#080d0a] py-8 border-t border-white/5 text-center flex flex-col items-center">
+        <p className="text-gray-500 text-sm">
+          © 2026 X Semana da Engenharia de Computação. Todos os direitos reservados.
+        </p>
+        <p className="text-gray-600 text-xs mt-2">
+          Desenvolvido em São Carlos, SP.
+        </p>
+      </footer>
     </main>
   );
 }
