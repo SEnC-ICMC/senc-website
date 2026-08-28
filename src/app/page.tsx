@@ -9,11 +9,14 @@ const realizadores = [
   '/sponsors/eesc.png',
 ];
 
-const patrocinadores = [
-  '/sponsors/motorola.svg', // Replace with your actual paths
-  '/sponsors/phelcom.svg',
-  '/sponsors/opus.png',
+const patrocinadores = [  
+  '/sponsors/controlID.png',
+  '/sponsors/digitaly.png',  
+  '/sponsors/FRconsultoria.png',
   '/sponsors/lwart.png',
+  '/sponsors/motorola.svg',
+  '/sponsors/opus.png',
+  '/sponsors/phelcom.png'
 ];
 
 export default function Home() {
