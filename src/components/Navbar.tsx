@@ -32,26 +32,42 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 py-4 sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 w-full bg-brand-dark/95 backdrop-blur-sm text-white py-4 shadow-lg border-b border-gray-800">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         
         {/* Logo */}
-        <Link href="/" className="font-black text-2xl text-gray-900 tracking-tight">
-          SEnC<span className="text-blue-600">.2026</span>
+        <Link href="/" className="font-black text-2xl text-white-900 tracking-tight">
+          SEnC<span className="text-green-600"> 2026</span>
         </Link>
         
         {/* ========================================= */}
         {/* DESKTOP MENU: Hidden on mobile (hidden md:flex) */}
         {/* ========================================= */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/programacao" className="font-medium text-gray-600 hover:text-gray-900 transition-colors">
+          <Link href="/#hero" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Home
+          </Link>
+          
+          <Link href="/#countdown" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Sobre
+          </Link>
+          
+          <Link href="/schedule" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Programação
+          </Link>
+          
+          <Link href="/#sponsors" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Patrocinadores
+          </Link>
+
+          <Link href="/#contact" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Contato
           </Link>
           
           {!isLoading && (
             <Link 
-              href={isLoggedIn ? "/participante" : "/participante/nova-inscricao"}
-              className="bg-gray-900 hover:bg-gray-800 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg"
+              href={isLoggedIn ? "/participant" : "/participant/new-registration"}
+              className="bg-green-900 hover:bg-green-800 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg"
             >
               Área do Participante
             </Link>
@@ -85,20 +101,46 @@ export default function Navbar() {
       {/* ========================================= */}
       {isMobileMenuOpen && (
         <div className="md:hidden pt-4 pb-2 flex flex-col gap-4 border-t border-gray-100 mt-4 animate-in slide-in-from-top-2">
+          <Link 
+            href="/#hero" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Home
+          </Link>
           
           <Link 
-            href="/programacao" 
+            href="/#countdown" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Sobre
+          </Link>
+          
+          <Link 
+            href="/schedule" 
             onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
-            className="font-medium text-gray-600 hover:text-gray-900 transition-colors block px-2 py-2"
-          >
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Programação
+          </Link>
+          
+          <Link 
+            href="/#sponsors" 
+            onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Patrocinadores
+          </Link>
+
+          <Link 
+            href="/#contact" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Contato
           </Link>
           
           {!isLoading && (
             <Link 
-              href={isLoggedIn ? "/participante" : "/participante/nova-inscricao"}
+              href={isLoggedIn ? "/participant" : "/participant/new-registration"}
               onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
-              className="bg-gray-900 text-center hover:bg-gray-800 text-white font-medium text-sm px-5 py-3 rounded-xl shadow-md transition-all"
+              className="bg-green-900 hover:bg-green-800 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all"
             >
               Área do Participante
             </Link>

@@ -31,7 +31,7 @@ export default function Home() {
         
         {/* The Actual Image (public/hero-fair.jpg) */}
         <Image 
-          src="/foto-senc-25-bg.jpg" // Placeholder image
+          src="/foto-senc-25-bg.webp" // Placeholder image
           alt="University Tech Fair Scene"
           fill
           className="object-cover"
@@ -83,23 +83,23 @@ export default function Home() {
         </div>
 
         {/* The Countdown Display */}
-        <div className="flex gap-4 md:gap-8 justify-center flex-wrap">
+        
+        <div className="hidden flex gap-4 md:gap-8 justify-center flex-wrap">
           
-          {/* Reuseable Card Component Mapping */}
           {[
             { label: 'Dia', value: '04' },
             { label: 'Hora', value: '07' },
             { label: 'Minuto', value: '05' },
             { label: 'Segundo', value: '39' },
           ].map((item) => (
-            <div key={item.label} className="w-32 md:w-40 flex flex-col items-center text-center">
+            <div key={item.label} className="hidden w-32 md:w-40 flex flex-col items-center text-center">
               {/* The "Shaded Rectangle" Card */}
-              <div className="bg-white w-full h-32 md:h-40 flex items-center justify-center rounded-xl shadow-xl border border-gray-100">
-                <span className="text-6xl md:text-7xl font-black text-gray-950 font-mono tracking-tighter">
+              <div className="hidden bg-white w-full h-32 md:h-40 flex items-center justify-center rounded-xl shadow-xl border border-gray-100">
+                <span className="hidden text-6xl md:text-7xl font-black text-gray-950 font-mono tracking-tighter">
                   {item.value}
                 </span>
               </div>
-              <span className="mt-4 text-sm font-semibold uppercase tracking-wider text-gray-600">
+              <span className="hidden mt-4 text-sm font-semibold uppercase tracking-wider text-gray-600">
                 {item.label}
               </span>
             </div>
