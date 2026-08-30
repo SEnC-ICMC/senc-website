@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
 import Link from 'next/link';
+import EventPicker from '@/components/admin/EventPicker';
 
 export default function AdminDashboard() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
 
   useEffect(() => {
     const checkAdminAccess = async () => {
@@ -54,13 +56,20 @@ export default function AdminDashboard() {
           Sistema de credenciamento e leitura de QR Codes.
         </p>
 
+      <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-2xl mb-8">
+          <h2 className="text-xl font-bold mb-6">Selecione o evento</h2>
+          <EventPicker selectedEventId={selectedEventId} onEventSelect={setSelectedEventId} />
+        </div>
+
         {/* Placeholder for future Camera/Scanner component */}
+        {selectedEventId && (
         <div className="bg-gray-800 p-8 rounded-xl border border-gray-700 shadow-2xl mb-8">
           <h2 className="text-xl font-bold mb-6">Leitor de Check-in</h2>
           <div className="w-full aspect-video bg-black border border-gray-600 rounded flex items-center justify-center">
-             <span className="text-gray-500 font-mono tracking-widest">[ INICIALIZANDO CÂMERA... ]</span>
+             <span className="text-gray-500 font-mono tracking-widest">[ SCANNER EM BREVE... ]</span>
           </div>
         </div>
+        )}
 
         <Link href="/participant" className="text-gray-400 hover:text-white transition">
           &larr; Sair do modo Admin
