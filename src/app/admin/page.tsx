@@ -1,6 +1,49 @@
+"use client";
+
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase/client';
 import Link from 'next/link';
 
 export default function AdminDashboard() {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAdminAccess = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        // If not logged in - redirect to participant login page
+        window.location.href = '/participant/new-registration';
+        return;
+      }
+
+      const {data: participant, error} = await supabase
+        .from('participants')
+        .select('is_admin')
+        .eq('id', session.user.id)
+        .single();
+
+      console.log('DEBUG auth user id:', session.user.id);
+      console.log('DEBUG participant data:', participant);
+      console.log('DEBUG query error:', error);
+      
+      if (error || !participant?.is_admin) {
+        // If not an admin - redirect to participant dashboard
+        window.location.href = '/participant';
+        return;
+      }
+
+      setIsAuthorized(true);
+      setIsLoading(false);
+    };
+
+    checkAdminAccess();
+  }, []);
+
+  if (isLoading || !isAuthorized) {
+    return <div className="min-h-screen bg-gray-900 flex items-center justify-center text-gray-400">Verificando permissões...</div>;
+  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-start bg-gray-900 text-white p-6 pt-20">
       <div className="max-w-3xl w-full text-center">
@@ -19,7 +62,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <Link href="/" className="text-gray-400 hover:text-white transition">
+        <Link href="/participant" className="text-gray-400 hover:text-white transition">
           &larr; Sair do modo Admin
         </Link>
       </div>
