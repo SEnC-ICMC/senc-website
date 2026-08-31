@@ -4,125 +4,130 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
 
 interface EventRow {
-    id: number;
-    title: string;
-    speaker: string;
-    event_type: string;
-    location: string;
-    time_display: string;
-    color_theme: string;
-    starts_at: string;
-    ends_at: string;
+  id: number;
+  title: string;
+  speaker: string;
+  event_type: string;
+  location: string;
+  time_display: string;
+  color_theme: string;
+  starts_at: string;
+  ends_at: string;
 }
 
 interface EventPickerProps {
-    selectedEventId: number | null;
-    onEventSelect: (eventId: number) => void;
+  selectedEventId: number | null;
+  onSelectEvent: (eventId: number) => void;
 }
 
 type EventStatus = 'now' | 'upcoming' | 'past';
 
 function getEventStatus(event: EventRow, now: Date): EventStatus {
-    const startsAt = new Date(event.starts_at);
-    const endsAt = new Date(event.ends_at);
-
-    if (now >= startsAt && now <= endsAt) {
-        return 'now';
-    } else if (now < startsAt) {
-        return 'upcoming';
-    } else {
-        return 'past';
-    }
+  const start = new Date(event.starts_at);
+  const end = new Date(event.ends_at);
+  if (now >= start && now <= end) return 'now';
+  if (now < start) return 'upcoming';
+  return 'past';
 }
 
-const SECTIONS: {label: string, status: EventStatus}[] = [
-    { label: 'Acontecendo agora', status: 'now' },
-    { label: 'Próximos', status: 'upcoming' },
-    { label: 'Passados', status: 'past' },
+interface Section {
+  label: string;
+  status: EventStatus;
+  limit?: number;
+  takeFrom?: 'start' | 'end';
+}
+
+const SECTIONS: Section[] = [
+  { label: 'Acontecendo agora', status: 'now' },
+  { label: 'Próximos', status: 'upcoming', limit: 3, takeFrom: 'start' },
+  { label: 'Anteriores', status: 'past', limit: 1, takeFrom: 'end' },
 ];
 
-export default function EventPicker({ selectedEventId, onEventSelect }: EventPickerProps) {
-    const [events, setEvents] = useState<EventRow[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [, forceTick] = useState(0); // Used to force re-render every minute
+export default function EventPicker({ selectedEventId, onSelectEvent }: EventPickerProps) {
+  const [events, setEvents] = useState<EventRow[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [, forceTick] = useState(0);
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            const { data, error } = await supabase
-                .from('events')
-                .select('*')
-                .order('starts_at', { ascending: true });
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const { data, error } = await supabase
+        .from('events')
+        .select('id, title, speaker, event_type, location, time_display, color_theme, starts_at, ends_at')
+        .order('starts_at', { ascending: true });
 
-            if (!error && data) {
-                const rows = data as EventRow[];
-                setEvents(rows);
+      if (!error && data) {
+        const rows = data as EventRow[];
+        setEvents(rows);
 
-                if (selectedEventId === null && rows.length > 0) {
-                    const now = new Date();
-                    const current = rows.find((e) => getEventStatus(e, now) === 'now');
-                    const nextUpcoming = rows.find((e) => getEventStatus(e, now) === 'upcoming');
-                    const defaultEvent = current || nextUpcoming || rows[0];
-                    if (defaultEvent) {
-                        onEventSelect(defaultEvent.id);
-                    }
-                }
-            }
-            setIsLoading(false);
-        };
+        // Default selection on first load only: prefer whatever is
+        // happening right now, otherwise the soonest upcoming event.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (selectedEventId === null) {
+          const now = new Date();
+          const current = rows.find((e) => getEventStatus(e, now) === 'now');
+          const nextUpcoming = rows.find((e) => getEventStatus(e, now) === 'upcoming');
+          const defaultEvent = current || nextUpcoming;
+          if (defaultEvent) onSelectEvent(defaultEvent.id);
+        }
+      }
+      setIsLoading(false);
+    };
 
-        fetchEvents();
+    fetchEvents();
 
-        const interval = setInterval(() => forceTick((t) => t + 1), 60000); // Force re-render every minute
-        return () => clearInterval(interval);
-    }, []);
+    // Recompute now/upcoming/past every minute so the sectioning stays
+    // accurate without needing a manual refresh.
+    const interval = setInterval(() => forceTick((t) => t + 1), 60000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    if (isLoading) {
-        return <p className="text-gray-500 text-sm">Carregando eventos...</p>;
-    }
+  if (isLoading) {
+    return <p className="text-gray-500 text-sm">Carregando eventos...</p>;
+  }
 
-    if (events.length === 0) {
-        return <p className="text-gray-500 text-sm">Nenhum evento cadastrado.</p>;
-    }
+  if (events.length === 0) {
+    return <p className="text-gray-500 text-sm">Nenhum evento cadastrado.</p>;
+  }
 
-    const now = new Date();
+  const now = new Date();
 
-    return (
-        <div className="w-full text-left space-y-6">
-            {SECTIONS.map(({ label, status }) => {
-                const filteredEvents = events.filter((event) => getEventStatus(event, now) === status);
-                if (filteredEvents.length === 0) {
-                    return null;
-                }
+  return (
+    <div className="w-full text-left space-y-6">
+      {SECTIONS.map(({ label, status }) => {
+        const filtered = events.filter((e) => getEventStatus(e, now) === status);
+        if (filtered.length === 0) return null;
+
+        return (
+          <div key={status}>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">{label}</h3>
+            <div className="space-y-2">
+              {filtered.map((event) => {
+                const isSelected = event.id === selectedEventId;
                 return (
-                    <div key={status}>
-                        <h3 className="text-sm font-semibold text-gray-500 mb-2">{label}</h3>
-                        <div className="space-y-2">
-                            {filteredEvents.map((event) => {
-                                const isSelected = event.id === selectedEventId;
-                                return (
-                                    <button
-                                        key={event.id}
-                                        onClick={() => onEventSelect(event.id)}
-                                        className={`w-full text-left p-4 rounded-lg border transition ${
-                                            isSelected
-                                                ? 'bg-green-400/10 border-green-400 text-green-300'
-                                                : 'bg-gray-800 border-gray-700 hover:border-gray-500 text-gray-200'
-                                        }`}
-                                    >
-                                        <div className="flex justify-between items-center gap-4">
-                                            <span className="font-bold">{event.title}</span>
-                                            <span className="text-xs text-gray-400 whitespace-nowrap">{event.time_display}</span>
-                                        </div>
-                                        <div className="text-sm text-gray-400 mt-1">
-                                            {event.speaker} - {event.location}
-                                        </div>
-                                    </button>
-                                );
-                            })}
-                        </div>
+                  <button
+                    key={event.id}
+                    onClick={() => onSelectEvent(event.id)}
+                    className={`w-full text-left p-4 rounded-lg border transition ${
+                      isSelected
+                        ? 'bg-gradient-to-r from-purple-500/10 to-green-400/10 border-green-400 text-green-300'
+                        : 'bg-white/[0.02] border-white/10 hover:border-purple-400/60 text-gray-200'
+                    }`}
+                  >
+                    <div className="flex justify-between items-center gap-4">
+                      <span className="font-bold">{event.title}</span>
+                      <span className="text-xs text-gray-400 whitespace-nowrap">{event.time_display}</span>
                     </div>
+                    <div className="text-sm text-gray-400 mt-1">
+                      {event.speaker} · {event.location}
+                    </div>
+                  </button>
                 );
-            })}
-        </div>
-    );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
