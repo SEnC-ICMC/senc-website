@@ -63,7 +63,7 @@ export default function AdminDashboard() {
             Painel de Controle SEnC
           </h1>
           <p className="text-gray-400 mt-3">
-            Sistema de credenciamento e leitura de QR Codes.
+            Sistema de credenciamento
           </p>
         </div>
 

@@ -35,7 +35,7 @@ export default function Home() {
           alt="University Tech Fair Scene"
           fill
           className="object-cover"
-          quality={80}
+          quality={75}
           priority // Prioritize loading this image for better performance
         />
 

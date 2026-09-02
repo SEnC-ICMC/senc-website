@@ -15,6 +15,7 @@ export default function ParticipantDashboard() {
   const [userEmail, setUserEmail] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   
   const [attendedActivities, setAttendedActivities] = useState<AttendedEvent[]>([]);
   const [attendancePercentage, setAttendancePercentage] = useState(0);
@@ -32,6 +33,9 @@ export default function ParticipantDashboard() {
 
         const { count: totalEvents } = await supabase.from('events').select('*', { count: 'exact', head: true });
         const { data: attendanceData } = await supabase.from('attendance').select(`id, events (id, title, time_display, event_type)`).eq('participant_id', user.id);
+        const { data: participantRow } = await supabase.from('participants').select('is_admin').eq('id', user.id).single();
+
+        setIsAdmin(!!participantRow?.is_admin);
 
         if (attendanceData) {
           const formattedData = attendanceData as unknown as AttendedEvent[];
@@ -60,9 +64,9 @@ export default function ParticipantDashboard() {
       
       {/* Soft Dark Header */}
       <div className="bg-gray-900 text-white pt-12 pb-24 px-6">
-        <div className="max-w-5xl mx-auto flex justify-between items-center">
+        <div className="max-w-5xl mx-auto flex justify-between items-start">
           <div>
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-2 flex-wrap">
               <h1 className="text-4xl font-extrabold tracking-tight">
                 Olá, <span className="text-green-400">{userName}</span>!
               </h1>
@@ -71,10 +75,19 @@ export default function ParticipantDashboard() {
               </span>
             </div>
             <p className="text-gray-400 text-lg">Acompanhe seu progresso na X SEnC.</p>
+
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="inline-block mt-4 text-sm font-bold text-purple-300 hover:text-black hover:bg-purple-400 border border-purple-400 transition px-4 py-2 rounded-full"
+              >
+                Entrar no modo admin
+              </Link>
+            )}
           </div>
           <button 
             onClick={() => supabase.auth.signOut().then(() => window.location.href = '/')} 
-            className="text-sm font-bold text-gray-400 hover:text-white transition bg-white/10 px-4 py-2 rounded-full"
+            className="shrink-0 text-sm font-bold text-gray-400 hover:text-white transition bg-white/10 px-4 py-2 rounded-full"
           >
             Sair
           </button>
