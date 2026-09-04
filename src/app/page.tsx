@@ -182,7 +182,9 @@ export default function Home() {
             <ul className="space-y-4">
               <li><strong>Endereço:</strong> <br/>Av. Trab. São Carlense, 400<br/>Parque Arnold Schimidt<br/>São Carlos - SP 13566-590</li>
               <li><strong>Email:</strong> <br/><a href="mailto:senc@icmc.usp.br" className="text-green-600 font-medium hover:underline">senc@icmc.usp.br</a></li>
-              <li><strong>Facebook:</strong> <br/><a href="https://facebook.com/senc.usp" target="_blank" rel="noreferrer" className="text-blue-700 font-medium hover:underline">facebook.com/senc.usp</a></li>
+              <li><strong>Instagram:</strong> <br/><a href="https://instagram.com/senc.usp" target="_blank" rel="noreferrer" className="text-pink-500 font-medium hover:underline">instagram.com/senc.usp</a></li>
+              <li><strong>LinkedIn:</strong> <br/><a href="https://linkedin.com/company/senc" target="_blank" rel="noreferrer" className="text-blue-500 font-medium hover:underline">linkedin.com/company/senc</a></li>
+
             </ul>
           </div>
 
