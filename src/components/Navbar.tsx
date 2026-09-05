@@ -2,11 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from '@/lib/supabase/client';
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,14 +28,17 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-brand-dark/95 backdrop-blur-sm text-white py-4 shadow-lg border-b border-gray-800">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        
+    <nav className="relative sticky top-0 z-50 w-full bg-gray-900 backdrop-blur-sm text-white py-4 shadow-lg">
+      {/* Brand gradient edge, replacing the old flat gray border */}
+      
+
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
+
         {/* Logo */}
-        <Link href="/" className="font-black text-2xl text-white-900 tracking-tight">
-          SEnC<span className="text-green-600"> 2026</span>
+        <Link href="/" className="font-black text-2xl text-white tracking-tight">
+          SEnC<span className="text-green-400"> 2026</span>
         </Link>
-        
+
         {/* ========================================= */}
         {/* DESKTOP MENU: Hidden on mobile (hidden md:flex) */}
         {/* ========================================= */}
@@ -47,15 +46,15 @@ export default function Navbar() {
           <Link href="/#hero" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Home
           </Link>
-          
+
           <Link href="/#countdown" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Sobre
           </Link>
-          
+
           <Link href="/schedule" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Programação
           </Link>
-          
+
           <Link href="/#sponsors" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Patrocinadores
           </Link>
@@ -63,11 +62,11 @@ export default function Navbar() {
           <Link href="/#contact" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Contato
           </Link>
-          
+
           {!isLoading && (
-            <Link 
+            <Link
               href={isLoggedIn ? "/participant" : "/participant/new-registration"}
-              className="bg-green-900 hover:bg-green-800 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg"
+              className="bg-green-400 hover:bg-green-300 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg hover:shadow-green-400/20"
             >
               Área do Participante
             </Link>
@@ -77,9 +76,9 @@ export default function Navbar() {
         {/* ========================================= */}
         {/* MOBILE BUTTON: Hidden on PCs (md:hidden) */}
         {/* ========================================= */}
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-gray-600 hover:text-gray-900 focus:outline-none"
+          className="md:hidden p-2 text-gray-300 hover:text-green-400 focus:outline-none transition"
           aria-label="Toggle Menu"
         >
           {isMobileMenuOpen ? (
@@ -100,47 +99,47 @@ export default function Navbar() {
       {/* MOBILE DROPDOWN: Shows only if button is clicked */}
       {/* ========================================= */}
       {isMobileMenuOpen && (
-        <div className="md:hidden pt-4 pb-2 flex flex-col gap-4 border-t border-gray-100 mt-4 animate-in slide-in-from-top-2">
-          <Link 
-            href="/#hero" 
+        <div className="md:hidden px-4 sm:px-6 pt-4 pb-4 flex flex-col gap-4 border-t border-white/10 mt-4 animate-in slide-in-from-top-2">
+          <Link
+            href="/#hero"
             onClick={() => setIsMobileMenuOpen(false)}
             className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Home
           </Link>
-          
-          <Link 
-            href="/#countdown" 
+
+          <Link
+            href="/#countdown"
             onClick={() => setIsMobileMenuOpen(false)}
             className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Sobre
           </Link>
-          
-          <Link 
-            href="/schedule" 
+
+          <Link
+            href="/schedule"
             onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
             className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Programação
           </Link>
-          
-          <Link 
-            href="/#sponsors" 
+
+          <Link
+            href="/#sponsors"
             onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
             className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Patrocinadores
           </Link>
 
-          <Link 
-            href="/#contact" 
+          <Link
+            href="/#contact"
             onClick={() => setIsMobileMenuOpen(false)}
             className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Contato
           </Link>
-          
+
           {!isLoading && (
-            <Link 
+            <Link
               href={isLoggedIn ? "/participant" : "/participant/new-registration"}
               onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
-              className="bg-green-900 hover:bg-green-800 text-white font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all"
+              className="w-full text-center bg-green-400 hover:bg-green-300 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all"
             >
               Área do Participante
             </Link>
