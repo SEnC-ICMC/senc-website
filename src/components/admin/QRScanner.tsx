@@ -111,7 +111,7 @@ export default function QRScanner({ eventId }: QRScannerProps) {
     try {
       await scanner.start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: 250 },
+        { fps: 10, qrbox: { width: 280, height: 280 } },
         handleDecode,
         () => {
           // Fires continuously while no QR is in frame — expected, not an error.
@@ -155,7 +155,7 @@ export default function QRScanner({ eventId }: QRScannerProps) {
 
   return (
     <div className="w-full">
-      <div className="relative w-full aspect-video bg-black border border-white/10 rounded-lg overflow-hidden shadow-[0_0_40px_-12px_rgba(168,85,247,0.5)]">
+      <div className="relative w-full aspect-video max-w-md mx-auto bg-black border border-white/10 rounded-lg overflow-hidden shadow-[0_0_40px_-12px_rgba(168,85,247,0.5)]">
         <div id={READER_ELEMENT_ID} className="w-full h-full" />
 
         {!isActive && (

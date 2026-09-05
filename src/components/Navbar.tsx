@@ -28,9 +28,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="relative sticky top-0 z-50 w-full bg-brand-dark/95 backdrop-blur-sm text-white py-4 shadow-lg">
+    <nav className="relative sticky top-0 z-50 w-full bg-gray-900 backdrop-blur-sm text-white py-4 shadow-lg">
       {/* Brand gradient edge, replacing the old flat gray border */}
-      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-green-400" />
+      
 
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
 
