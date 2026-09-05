@@ -22,6 +22,11 @@ interface EventPickerProps {
 
 type EventStatus = 'now' | 'upcoming' | 'past';
 
+// Only events with one of these types are shown for check-in — other types
+// (e.g. coffee breaks, opening/closing ceremonies) don't track attendance.
+// Add/remove strings here to control what shows up in the picker.
+const ATTENDANCE_EVENT_TYPES = ['Palestra'];
+
 function getEventStatus(event: EventRow, now: Date): EventStatus {
   const start = new Date(event.starts_at);
   const end = new Date(event.ends_at);
@@ -56,7 +61,8 @@ export default function EventPicker({ selectedEventId, onSelectEvent }: EventPic
         .order('starts_at', { ascending: true });
 
       if (!error && data) {
-        const rows = data as EventRow[];
+
+        const rows = data.filter((e) => ATTENDANCE_EVENT_TYPES.includes(e.event_type)) as EventRow[];
         setEvents(rows);
 
         // Default selection on first load only: prefer whatever is
@@ -94,13 +100,27 @@ export default function EventPicker({ selectedEventId, onSelectEvent }: EventPic
 
   return (
     <div className="w-full text-left space-y-6">
-      {SECTIONS.map(({ label, status }) => {
-        const filtered = events.filter((e) => getEventStatus(e, now) === status);
+      {SECTIONS.map(({ label, status, limit, takeFrom }) => {
+        let filtered = events.filter((e) => getEventStatus(e, now) === status);
         if (filtered.length === 0) return null;
+
+        let hiddenCount = 0;
+        if (limit && filtered.length > limit) {
+          hiddenCount = filtered.length - limit;
+          filtered = takeFrom === 'end' ? filtered.slice(-limit) : filtered.slice(0, limit);
+        }
 
         return (
           <div key={status}>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">{label}</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
+              {label}
+              {hiddenCount > 0 && (
+                <span className="normal-case font-normal text-gray-600">
+                  {' '}
+                  · +{hiddenCount} não exibido{hiddenCount > 1 ? 's' : ''}
+                </span>
+              )}
+            </h3>
             <div className="space-y-2">
               {filtered.map((event) => {
                 const isSelected = event.id === selectedEventId;
