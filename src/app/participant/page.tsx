@@ -123,8 +123,7 @@ export default function ParticipantDashboard() {
 
         {/* Credential Card */}
         <ScrollReveal>
-          <div className="relative bg-white p-8 rounded-2xl shadow-xl border border-gray-100 flex flex-col items-center text-center h-fit overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 via-indigo-400 to-green-500" />
+          <div className="relative bg-white px-8 py-4 rounded-2xl shadow-xl border border-gray-100 flex flex-col items-center text-center h-fit overflow-hidden">
 
             <h2 className="text-lg font-bold text-gray-800 mb-6 tracking-wide mt-2">Credencial de Acesso</h2>
 
