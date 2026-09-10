@@ -27,16 +27,20 @@ export default function Navbar() {
     };
   }, []);
 
-  return (
-    <nav className="relative sticky top-0 z-50 w-full bg-gray-900 backdrop-blur-sm text-white py-4 shadow-lg">
-      {/* Brand gradient edge, replacing the old flat gray border */}
+return (
+    <nav className="relative bg-gradient-to-r from-[#07D46A]/20 via-[#7634CA]/20 to-[#0015E2]/20 backdrop-blur-md border-b border-white/10 px-6 py-4 sticky top-0 z-50">
       
+      {/* Camada da Textura (Background Pattern) */}
+      <div className="absolute inset-0 z-[-1] opacity-10 bg-[url('/waves.webp')] bg-repeat pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 lg:px-8">
-
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+        
         {/* Logo */}
-        <Link href="/" className="font-black text-2xl text-white tracking-tight">
-          SEnC<span className="text-green-400"> 2026</span>
+        <Link href="/" className="flex items-center gap-3 font-black text-2xl text-white tracking-tight">
+          <img src="/logo-senc.webp" alt="Logo SEnC" className="w-10 h-10 object-contain" />
+          <div>
+            SEnC<span className="text-[#07D46A]">.2026</span>
+          </div>
         </Link>
 
         {/* ========================================= */}
