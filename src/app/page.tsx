@@ -10,13 +10,13 @@ const realizadores = [
 ];
 
 const patrocinadores = [  
-  '/sponsors/controlID.png',
-  '/sponsors/digitaly.png',  
-  '/sponsors/FRconsultoria.png',
-  '/sponsors/lwart.png',
-  '/sponsors/motorola.svg',
-  '/sponsors/opus.png',
-  '/sponsors/phelcom.png'
+  { logo: '/sponsors/controlID.png', url: 'https://www.controlid.com.br' },
+  { logo: '/sponsors/digitaly.png', url: 'https://digitaly.tech/' },  
+  { logo: '/sponsors/FRconsultoria.png', url: 'https://www.consultoriafr.com.br/' },
+  { logo: '/sponsors/lwart.png', url: 'https://www.lwart.com.br/' },
+  { logo: '/sponsors/motorola.png', url: 'https://www.motorola.com.br' },
+  { logo: '/sponsors/opus.png', url: 'https://www.opus-software.com.br/' },
+  { logo: '/sponsors/phelcom.png', url: 'https://phelcom.com/pt-br/' }
 ];
 
 export default function Home() {
@@ -127,41 +127,44 @@ export default function Home() {
           Conheça as instituições e empresas que tornam a X SEnC possível.
         </p>
 
-        {/* --- BLOCK 1: PATROCINADORES (Moved to Top & Made Larger) --- */}
+        {/* --- BLOCK 1: PATROCINADORES --- */}
         <h3 className="text-3xl font-black text-gray-900 uppercase tracking-widest mb-8">Patrocínio</h3>
         
-        {/* Larger gap, larger boxes for premium sponsors */}
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-12 md:gap-16 items-center mb-24">
-          {patrocinadores.map((logoPath, index) => (
-            <div 
+          {patrocinadores.map((patrocinador, index) => (
+            <a 
               key={`patrocinador-${index}`} 
-              // INCREASED SIZE: w-72 h-48 (288px by 192px) with p-8 padding
-              className="w-64 h-40 flex items-center justify-center p-8 bg-white rounded-xl shadow-lg border border-gray-100 transition hover:shadow-2xl hover:-translate-y-1 duration-300"
+              href={patrocinador.url}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="relative block w-64 h-40 bg-white rounded-xl shadow-lg border border-gray-100 transition hover:shadow-2xl hover:-translate-y-1 duration-300 overflow-hidden"
             >
-              <img 
-                src={logoPath} 
+              <Image 
+                src={patrocinador.logo} 
                 alt={`Patrocinador ${index + 1}`} 
-                className="w-full h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                fill
+                className="object-contain p-8 filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
-            </div>
+            </a>
           ))}
         </div>
 
-        {/* --- BLOCK 2: REALIZADORES (Moved to Bottom & Made Smaller) --- */}
+        {/* --- BLOCK 2: REALIZADORES --- */}
         <h3 className="text-xl font-black text-gray-600 uppercase tracking-widest mb-8">Realização</h3>
         
-        {/* Smaller gap, smaller boxes for institutional partners */}
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-8 items-center">
           {realizadores.map((logoPath, index) => (
             <div 
               key={`realizador-${index}`} 
-              // DECREASED SIZE: w-56 h-36 (224px by 144px) with p-5 padding
-              className="w-56 h-36 flex items-center justify-center p-5 bg-white rounded-xl shadow-md border border-gray-100 transition hover:shadow-xl hover:-translate-y-1 duration-300"
+              // Adicionamos 'relative' e removemos 'flex/items-center/p-5'
+              className="relative w-56 h-36 bg-white rounded-xl shadow-md border border-gray-100 transition hover:shadow-xl hover:-translate-y-1 duration-300 overflow-hidden"
             >
-              <img 
+              <Image 
                 src={logoPath} 
                 alt={`Realização ${index + 1}`} 
-                className="w-full h-full object-contain filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                fill
+                // O padding (p-5) veio para cá
+                className="object-contain p-5 filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </div>
           ))}
