@@ -120,8 +120,11 @@ export default function Home() {
         </ScrollReveal>
 
         {/* --- BLOCK 1: PATROCINADORES --- */}
-        <h3 className="text-3xl font-black text-gray-900 uppercase tracking-widest mb-8">Patrocínio</h3>
-        
+        <ScrollReveal>
+          <h3 className="text-3xl font-black text-gray-900 uppercase tracking-widest mb-8">Patrocínio</h3>
+        </ScrollReveal>
+
+        <ScrollReveal>
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-12 md:gap-16 items-center mb-24">
           {patrocinadores.map((patrocinador, index) => (
             <a 
@@ -135,32 +138,36 @@ export default function Home() {
                 src={patrocinador.logo} 
                 alt={`Patrocinador ${index + 1}`} 
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-contain p-8 filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
               />
             </a>
           ))}
         </div>
-
-        {/* --- BLOCK 2: REALIZADORES --- */}
-        <h3 className="text-xl font-black text-gray-600 uppercase tracking-widest mb-8">Realização</h3>
-        
-        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-8 items-center">
-          {realizadores.map((logoPath, index) => (
-            <div 
-              key={`realizador-${index}`} 
-              // Adicionamos 'relative' e removemos 'flex/items-center/p-5'
-              className="relative w-56 h-36 bg-white rounded-xl shadow-md border border-gray-100 transition hover:shadow-xl hover:-translate-y-1 duration-300 overflow-hidden"
-            >
-              <Image 
-                src={logoPath} 
-                alt={`Realização ${index + 1}`} 
-                fill
-                // O padding (p-5) veio para cá
-                className="object-contain p-5 filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-              />
-            </div>
-          ))}
-        </div>
+        </ScrollReveal>
+        <ScrollReveal>
+          <h3 className="text-xl font-black text-gray-600 uppercase tracking-widest mb-8">Realização</h3>
+        </ScrollReveal>
+        <ScrollReveal>
+          <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-8 items-center">
+            {realizadores.map((logoPath, index) => (
+              <div 
+                key={`realizador-${index}`} 
+                // Adicionamos 'relative' e removemos 'flex/items-center/p-5'
+                className="relative w-56 h-36 bg-white rounded-xl shadow-md border border-gray-100 transition hover:shadow-xl hover:-translate-y-1 duration-300 overflow-hidden"
+              >
+                <Image 
+                  src={logoPath} 
+                  alt={`Realização ${index + 1}`} 
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  // O padding (p-5) veio para cá
+                  className="object-contain p-5 filter grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </ScrollReveal>
 
       </section>
 
