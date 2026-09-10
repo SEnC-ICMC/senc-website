@@ -2,11 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from '@/lib/supabase/client';
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,19 +42,35 @@ return (
             SEnC<span className="text-[#07D46A]">.2026</span>
           </div>
         </Link>
-        
+
         {/* ========================================= */}
         {/* DESKTOP MENU: Hidden on mobile (hidden md:flex) */}
         {/* ========================================= */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/programacao" className="font-medium text-[#9EAEA5] hover:text-white transition-colors">
+          <Link href="/#hero" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Home
+          </Link>
+
+          <Link href="/#countdown" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Sobre
+          </Link>
+
+          <Link href="/schedule" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Programação
           </Link>
-          
+
+          <Link href="/#sponsors" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Patrocinadores
+          </Link>
+
+          <Link href="/#contact" className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Contato
+          </Link>
+
           {!isLoading && (
-            <Link 
-              href={isLoggedIn ? "/participante" : "/participante/nova-inscricao"}
-              className="bg-white text-[#0D1713] font-medium text-sm px-5 py-2.5 rounded-full shadow-md transition-all duration-300 hover:bg-[#9E6CDF] hover:text-white hover:scale-105 hover:shadow-[0_0_15px_rgba(158,108,223,0.4)]"
+            <Link
+              href={isLoggedIn ? "/participant" : "/participant/new-registration"}
+              className="bg-green-400 hover:bg-green-300 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg hover:shadow-green-400/20"
             >
               Área do Participante
             </Link>
@@ -68,9 +80,9 @@ return (
         {/* ========================================= */}
         {/* MOBILE BUTTON: Hidden on PCs (md:hidden) */}
         {/* ========================================= */}
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-[#9EAEA5] hover:text-white focus:outline-none"
+          className="md:hidden p-2 text-gray-300 hover:text-green-400 focus:outline-none transition"
           aria-label="Toggle Menu"
         >
           {isMobileMenuOpen ? (
@@ -91,21 +103,47 @@ return (
       {/* MOBILE DROPDOWN: Shows only if button is clicked */}
       {/* ========================================= */}
       {isMobileMenuOpen && (
-        <div className="md:hidden pt-4 pb-2 flex flex-col gap-4 border-t border-[#1A2E25] mt-4 animate-in slide-in-from-top-2">
-          
-          <Link 
-            href="/programacao" 
+        <div className="md:hidden px-4 sm:px-6 pt-4 pb-4 flex flex-col gap-4 border-t border-white/10 mt-4 animate-in slide-in-from-top-2">
+          <Link
+            href="/#hero"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="font-medium text-[#9EAEA5] hover:text-white transition-colors block px-2 py-2"
-          >
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Home
+          </Link>
+
+          <Link
+            href="/#countdown"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Sobre
+          </Link>
+
+          <Link
+            href="/schedule"
+            onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
             Programação
           </Link>
-          
+
+          <Link
+            href="/#sponsors"
+            onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Patrocinadores
+          </Link>
+
+          <Link
+            href="/#contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="font-medium text-gray-200 hover:text-green-400 transition duration-200">
+            Contato
+          </Link>
+
           {!isLoading && (
-            <Link 
-              href={isLoggedIn ? "/participante" : "/participante/nova-inscricao"}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="bg-white text-center hover:bg-gray-200 text-[#0D1713] font-medium text-sm px-5 py-3 rounded-xl shadow-md transition-all"
+            <Link
+              href={isLoggedIn ? "/participant" : "/participant/new-registration"}
+              onClick={() => setIsMobileMenuOpen(false)} // Closes menu when clicked
+              className="w-full text-center bg-green-400 hover:bg-green-300 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all"
             >
               Área do Participante
             </Link>

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import ContactForm from '../components/ContactForm';
+import ScrollReveal from '../components/ScrollReveal';
+import CountdownTimer from '../components/CountdownTimer';
 
 // 1. SPLIT YOUR MOCK DATA INTO TWO ARRAYS
 const realizadores = [
@@ -22,8 +24,8 @@ const patrocinadores = [
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-start bg-gray-50">
-      
-      {/* 
+
+      {/*
         ========================================================================
         1. THE HERO SECTION (app/page.tsx)
         Visual Style: Blurred Background with Text/Dates/Button Overlay
@@ -38,7 +40,7 @@ export default function Home() {
           alt="University Tech Fair Scene"
           fill
           className="object-cover"
-          quality={80}
+          quality={75}
           priority 
         />
 
@@ -66,66 +68,56 @@ export default function Home() {
         
       </section>
 
-      {/* 
+      {/*
         ========================================================================
         2. THE COUNTDOWN SECTION (app/page.tsx)
         Visual Style: Four Shaded Rectangular Cards on White Background
         Tailwind Key: bg-white, shadow-xl, text-shadow-xl (for deep shading)
         ========================================================================
       */}
-      <section id="countdown" className="w-full bg-white text-brand-dark py-24 flex flex-col items-center px-6">
-        <h2 className="text-xl font-bold uppercase tracking-widest text-gray-500 mb-2">#SAVETHEDATE</h2>
-        <h3 className="text-4xl md:text-5xl font-extrabold mb-8 text-center">
-          CONTE CADA SEGUNDO <br className="hidden md:inline"/>PARA A X SENC
-        </h3>
+      <section id="countdown" className="relative w-full bg-white text-brand-dark py-24 flex flex-col items-center px-6 overflow-hidden">
+        {/* Soft ambient color blobs, kept subtle so the section stays light */}
+        <div className="pointer-events-none absolute -top-24 -left-24 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 w-96 h-96 bg-green-300/20 rounded-full blur-3xl" />
 
-        {/* The Introduction Paragraph */}
-        <div className="max-w-3xl text-center mb-16">
-          <p className="text-xl md:text-2xl text-gray-700 leading-relaxed font-medium">
-            Prepare-se para uma jornada emocionante na Semana Acadêmica de Engenharia de Computação 2026! 
-            Trazemos palestras inspiradoras com líderes do mercado, workshops práticos, bate-papos exclusivos 
-            e eventos recreativos. Uma semana feita sob medida para conectar você com as tendências reais 
-            da tecnologia e do mercado de trabalho.
-          </p>
-        </div>
+        <ScrollReveal className="relative z-10 flex flex-col items-center w-full">
+          <h2 className="text-xl font-bold uppercase tracking-widest bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent mb-2">
+            #SAVETHEDATE
+          </h2>
+          <h3 className="text-4xl md:text-5xl font-extrabold mb-8 text-center">
+            CONTE CADA SEGUNDO <br className="hidden md:inline"/>PARA A X SENC
+          </h3>
 
-        {/* The Countdown Display */}
-        <div className="flex gap-4 md:gap-8 justify-center flex-wrap">
-          
-          {/* Reuseable Card Component Mapping */}
-          {[
-            { label: 'Dia', value: '04' },
-            { label: 'Hora', value: '07' },
-            { label: 'Minuto', value: '05' },
-            { label: 'Segundo', value: '39' },
-          ].map((item) => (
-            <div key={item.label} className="w-32 md:w-40 flex flex-col items-center text-center">
-              {/* The "Shaded Rectangle" Card */}
-              <div className="bg-white w-full h-32 md:h-40 flex items-center justify-center rounded-xl shadow-xl border border-gray-100">
-                <span className="text-6xl md:text-7xl font-black text-gray-950 font-mono tracking-tighter">
-                  {item.value}
-                </span>
-              </div>
-              <span className="mt-4 text-sm font-semibold uppercase tracking-wider text-gray-600">
-                {item.label}
-              </span>
-            </div>
-          ))}
-          
-        </div>
+          {/* The Introduction Paragraph */}
+          <div className="max-w-3xl text-center mb-16">
+            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed font-medium">
+              Prepare-se para uma jornada emocionante na Semana Acadêmica de Engenharia de Computação 2026!
+              Trazemos palestras inspiradoras com líderes do mercado, workshops práticos, bate-papos exclusivos
+              e eventos recreativos. Uma semana feita sob medida para conectar você com as tendências reais
+              da tecnologia e do mercado de trabalho.
+            </p>
+          </div>
+
+          {/* The Countdown Display — now a real, live-ticking timer */}
+          <CountdownTimer />
+        </ScrollReveal>
       </section>
 
-      {/* 
+      {/*
         ========================================================================
         4. SPONSORS & PARTNERS HUB
         Now split into Realização (Infrastructure) and Patrocínio (Financial)
-        ======================================================================== 
+        ========================================================================
       */}
       <section id="sponsors" className="w-full bg-gray-100 py-32 flex flex-col items-center">
-        <h2 className="text-xl font-bold uppercase tracking-widest text-gray-500 mb-2">Parcerias 2026</h2>
-        <p className="text-gray-700 max-w-xl text-center mb-16 px-6">
-          Conheça as instituições e empresas que tornam a X SEnC possível.
-        </p>
+        <ScrollReveal className="flex flex-col items-center">
+          <h2 className="text-xl font-bold uppercase tracking-widest bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent mb-2">
+            Parcerias 2026
+          </h2>
+          <p className="text-gray-700 max-w-xl text-center mb-16 px-6">
+            Conheça as instituições e empresas que tornam a X SEnC possível.
+          </p>
+        </ScrollReveal>
 
         {/* --- BLOCK 1: PATROCINADORES --- */}
         <h3 className="text-3xl font-black text-gray-900 uppercase tracking-widest mb-8">Patrocínio</h3>
@@ -172,51 +164,85 @@ export default function Home() {
 
       </section>
 
-      {/* 
+      {/*
         ========================================================================
         5. CONTACT US SECTION (The Hybrid Dashboard)
         Blueprint Ref: image_0.png & image_2.png (Contact Page Visualization)
         Tailwind Key: grid md:grid-cols-[1fr,2fr], bg-brand-light, dark grey text
-        ======================================================================== 
+        ========================================================================
       */}
-      <section id="contact" className="w-full bg-[#0D1713] text-white py-32 flex flex-col items-center relative overflow-hidden">
-        
-        {/* Efeito de brilho de fundo (Glow) */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-[#07D46A] opacity-10 blur-[100px] rounded-full pointer-events-none"></div>
+      <section id="contact" className="w-full bg-brand-light text-gray-900 py-32 flex flex-col items-center">
+        <ScrollReveal>
+          <h2 className="text-5xl font-black uppercase mb-16 text-center">
+            <span className="bg-gradient-to-r from-blue-500 to-green-500 bg-clip-text text-transparent">Contato</span>
+          </h2>
+        </ScrollReveal>
 
-        <h2 className="text-5xl font-black uppercase mb-16 z-10 text-transparent bg-clip-text bg-gradient-to-r from-[#07D46A] to-white">
-          Contato
-        </h2>
-        
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[1fr,2fr] gap-12 w-full z-10">
-          
-          {/* Coluna A: Informações de Contato (Estilo Glassmorphism Escuro) */}
-          <div className="bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/10 text-gray-200">
-            <h3 className="text-2xl font-bold mb-4 text-white">Informações de Contato</h3>
-            <p className="text-gray-400 mb-8">Estamos prontos para tirar suas dúvidas e receber sugestões.</p>
-            
-            <ul className="space-y-6">
-              <li className="flex flex-col">
-                <span className="text-[#07D46A] font-bold uppercase tracking-wider text-sm mb-1">Endereço</span>
-                <span className="leading-relaxed">Av. Trab. São Carlense, 400<br/>Parque Arnold Schimidt<br/>São Carlos - SP 13566-590</span>
-              </li>
-              <li className="flex flex-col">
-                <span className="text-[#07D46A] font-bold uppercase tracking-wider text-sm mb-1">Email</span>
-                <a href="mailto:senc@icmc.usp.br" className="hover:text-white transition-colors">senc@icmc.usp.br</a>
-              </li>
-              <li className="flex flex-col">
-                <span className="text-[#07D46A] font-bold uppercase tracking-wider text-sm mb-1">Facebook</span>
-                <a href="https://facebook.com/senc.usp" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">facebook.com/senc.usp</a>
-              </li>
-            </ul>
+        <ScrollReveal className="w-full">
+          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[1fr,2fr] gap-12 w-full">
+
+            {/* Column A: Direct Contact Details (Server Component Data) */}
+            <div className="bg-gray-100 p-8 rounded-lg shadow border border-gray-200 text-brand-dark">
+              <h3 className="text-xl font-bold mb-4">Informações de Contato</h3>
+              <p className="text-gray-700 mb-6">Estamos prontos para tirar suas dúvidas e receber sugestões.</p>
+
+              <ul className="space-y-5">
+                <li className="flex gap-3 items-start">
+                  <span className="shrink-0 w-9 h-9 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong className="block text-sm text-gray-500 uppercase tracking-wide mb-0.5">Endereço</strong>
+                    Av. Trab. São Carlense, 400<br/>Parque Arnold Schimidt<br/>São Carlos - SP 13566-590
+                  </div>
+                </li>
+
+                <li className="flex gap-3 items-start">
+                  <span className="shrink-0 w-9 h-9 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.8}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0-.414.336-.75.75-.75h18c.414 0 .75.336.75.75v10.5a.75.75 0 01-.75.75h-18a.75.75 0 01-.75-.75V6.75z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75l9.75 6.75 9.75-6.75" />
+                    </svg>
+                  </span>
+                  <div>
+                    <strong className="block text-sm text-gray-500 uppercase tracking-wide mb-0.5">Email</strong>
+                    <a href="mailto:senc@icmc.usp.br" className="text-green-600 font-medium hover:underline">senc@icmc.usp.br</a>
+                  </div>
+                </li>
+
+                <li className="flex gap-3 items-start">
+                  <span className="shrink-0 w-9 h-9 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-xs">
+                    IG
+                  </span>
+                  <div>
+                    <strong className="block text-sm text-gray-500 uppercase tracking-wide mb-0.5">Instagram</strong>
+                    <a href="https://instagram.com/senc.usp" target="_blank" rel="noreferrer" className="text-pink-500 font-medium hover:underline">instagram.com/senc.usp</a>
+                  </div>
+                </li>
+
+                <li className="flex gap-3 items-start">
+                  <span className="shrink-0 w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">
+                    in
+                  </span>
+                  <div>
+                    <strong className="block text-sm text-gray-500 uppercase tracking-wide mb-0.5">LinkedIn</strong>
+                    <a href="https://linkedin.com/company/senc" target="_blank" rel="noreferrer" className="text-blue-500 font-medium hover:underline">linkedin.com/company/senc</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column B: The Interactive Form (Client Component Injection) */}
+            <div className="bg-white p-8 rounded-lg shadow-xl border border-gray-100">
+              {/* INJECTING THE CLIENT FORM HERE */}
+              <ContactForm />
+            </div>
+
           </div>
-
-          {/* Coluna B: O Formulário Interativo */}
-          <div className="bg-white/5 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-[#07D46A]/20">
-            <ContactForm /> 
-          </div>
-
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* 
