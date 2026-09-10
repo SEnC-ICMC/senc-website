@@ -75,40 +75,40 @@ export default function ContactForm() {
       
       {/* NOME COMPLETO */}
       <div>
-        <label htmlFor="nome" className="block text-bg font-semibold text-gray-200">Nome Completo</label>
+        <label htmlFor="nome" className="block text-bg font-semibold text-gray-500">Nome Completo</label>
         <input 
           type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange}
-          className={`mt-1 block w-full p-3 rounded-lg border ${errors.nome ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.nome ? 'border-red-500' : 'border-white/10'} bg-gray-100 text-black placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
         {errors.nome && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.nome}</p>}
       </div>
 
       {/* EMAIL */}
       <div>
-        <label htmlFor="email" className="block text-bg font-semibold text-gray-200">Email</label>
+        <label htmlFor="email" className="block text-bg font-semibold text-gray-500">Email</label>
         <input 
           type="email" id="email" name="email" value={formData.email} onChange={handleChange}
-          className={`mt-1 block w-full p-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-white/10'} bg-gray-100 text-black placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
         {errors.email && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.email}</p>}
       </div>
 
       {/* TELEFONE */}
       <div>
-        <label htmlFor="telefone" className="block text-bg font-semibold text-gray-200">Telefone para Contato</label>
+        <label htmlFor="telefone" className="block text-bg font-semibold text-gray-500">Telefone para Contato</label>
         <input 
           type="tel" id="telefone" name="telefone" value={formData.telefone} onChange={handleChange}
-          className={`mt-1 block w-full p-3 rounded-lg border ${errors.telefone ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.telefone ? 'border-red-500' : 'border-white/10'} bg-gray-100 text-black placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
         {errors.telefone && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.telefone}</p>}
       </div>
 
       {/* MENSAGEM */}
       <div>
-        <label htmlFor="mensagem" className="block text-bg font-semibold text-gray-200">Sua Mensagem</label>
+        <label htmlFor="mensagem" className="block text-bg font-semibold text-gray-500">Sua Mensagem</label>
         <textarea 
           id="mensagem" name="mensagem" value={formData.mensagem} onChange={handleChange} rows={5}
-          className={`mt-1 block w-full p-3 rounded-lg border ${errors.mensagem ? 'border-red-500' : 'border-white/10'} bg-[#0D1713] text-white placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
+          className={`mt-1 block w-full p-3 rounded-lg border ${errors.mensagem ? 'border-red-500' : 'border-white/10'} bg-gray-100 text-black placeholder-gray-500 focus:outline-none focus:border-[#07D46A] focus:ring-1 focus:ring-[#07D46A] transition-colors`}
         />
         {errors.mensagem && <p className="mt-1 text-bg text-red-400 font-bold uppercase tracking-tight">{errors.mensagem}</p>}
       </div>
