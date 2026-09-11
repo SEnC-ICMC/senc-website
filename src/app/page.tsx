@@ -36,7 +36,7 @@ export default function Home() {
         
         {/* Imagem de Fundo */}
         <Image 
-          src="/foto-senc-25-bg.jpg" 
+          src="/foto-senc-25-bg.webp" 
           alt="University Tech Fair Scene"
           fill
           className="object-cover"

@@ -39,6 +39,7 @@ export default function ParticipantDashboard() {
 
         setIsAdmin(!!participantRow?.is_admin);
 
+
         if (attendanceData) {
           const formattedData = attendanceData as unknown as AttendedEvent[];
           setAttendedActivities(formattedData);
