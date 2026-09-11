@@ -12,13 +12,13 @@ const realizadores = [
 ];
 
 const patrocinadores = [  
-  { logo: '/sponsors/controlID.png', url: 'https://www.controlid.com.br' },
-  { logo: '/sponsors/digitaly.png', url: 'https://digitaly.tech/' },  
-  { logo: '/sponsors/FRconsultoria.png', url: 'https://www.consultoriafr.com.br/' },
-  { logo: '/sponsors/lwart.png', url: 'https://www.lwart.com.br/' },
-  { logo: '/sponsors/motorola.png', url: 'https://www.motorola.com.br' },
-  { logo: '/sponsors/opus.png', url: 'https://www.opus-software.com.br/' },
-  { logo: '/sponsors/phelcom.png', url: 'https://phelcom.com/pt-br/' }
+  { logo: '/sponsors/controlID.webp', url: 'https://www.controlid.com.br' },
+  { logo: '/sponsors/digitaly.webp', url: 'https://digitaly.tech/' },  
+  { logo: '/sponsors/FRconsultoria.webp', url: 'https://www.consultoriafr.com.br/' },
+  { logo: '/sponsors/lwart.webp', url: 'https://www.lwart.com.br/' },
+  { logo: '/sponsors/motorola.webp', url: 'https://www.motorola.com.br' },
+  { logo: '/sponsors/opus.webp', url: 'https://www.opus-software.com.br/' },
+  { logo: '/sponsors/phelcom.webp', url: 'https://phelcom.com/pt-br/' }
 ];
 
 export default function Home() {
@@ -42,6 +42,7 @@ export default function Home() {
           className="object-cover"
           quality={75}
           priority 
+          sizes="100vw"
         />
 
         {/* Camada de Desfoque (Mais escura para destacar o texto branco) */}

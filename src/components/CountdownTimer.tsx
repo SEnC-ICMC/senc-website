@@ -26,15 +26,19 @@ export default function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
-    setTimeLeft(getTimeLeft());
-    const interval = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
-    return () => clearInterval(interval);
+    const update = () => setTimeLeft(getTimeLeft());
+    const initialUpdate = window.setTimeout(update, 0);
+    const interval = setInterval(update, 1000);
+    return () => {
+      window.clearTimeout(initialUpdate);
+      clearInterval(interval);
+    };
   }, []);
 
   // Avoid a server/client mismatch flash — render nothing until mounted.
   if (!timeLeft) return null;
 
-  if (Date.now() >= EVENT_START.getTime()) {
+  if (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0) {
     return (
       <p className="text-2xl md:text-3xl font-black text-green-600 uppercase tracking-wide text-center">
         A X SEnC já começou! 🎉
