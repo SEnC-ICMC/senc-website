@@ -33,13 +33,14 @@ export default function MobileMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 right-0 top-full flex flex-col gap-4 border-t border-white/10 bg-black/90 px-4 pb-4 pt-4 backdrop-blur-md md:hidden">
+        <div className="absolute left-3 right-3 top-[calc(100%+0.75rem)] flex flex-col gap-2 rounded-2xl border border-white/15 bg-gradient-to-br from-[#071d14]/95 via-[#171329]/95 to-[#080d22]/95 px-3 pb-4 pt-3 shadow-[0_18px_45px_rgba(0,0,0,0.35)] backdrop-blur-xl md:hidden">
+          <div className="h-1 w-16 self-center rounded-full bg-gradient-to-r from-[#07D46A] via-[#7634CA] to-[#0015E2] opacity-90" />
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setIsOpen(false)}
-              className="font-medium text-gray-50 drop-shadow-md hover:text-green-400 transition duration-200"
+              className="rounded-xl border border-transparent px-4 py-3 font-medium text-gray-50 drop-shadow-md transition duration-200 hover:border-white/10 hover:bg-white/10 hover:text-green-300"
             >
               {link.label}
             </Link>
@@ -47,7 +48,7 @@ export default function MobileMenu() {
           <Link
             href="/participant/new-registration"
             onClick={() => setIsOpen(false)}
-            className="w-full text-center bg-green-400 hover:bg-green-300 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all"
+            className="mt-2 w-full rounded-xl bg-gradient-to-r from-green-400 to-[#07D46A] px-5 py-3 text-center text-sm font-bold text-[#07130d] shadow-[0_8px_24px_rgba(7,212,106,0.22)] transition-all hover:from-green-300 hover:to-green-400"
           >
             Área do Participante
           </Link>
