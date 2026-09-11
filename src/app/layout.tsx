@@ -6,8 +6,47 @@ import Navbar from "@/components/Navbar"; // <-- Add this import
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Semana da Engenharia de Computacao",
-  description: "Evento organizado por alunos para conectar alunos e o mundo da computacao dentro e fora da universidade",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  title: {
+    default: "X Semana da Engenharia de Computação | SEnC USP",
+    template: "%s | SEnC USP",
+  },
+  description:
+    "A Semana da Engenharia de Computação da USP de São Carlos conecta estudantes, pesquisadores e o mercado de tecnologia.",
+  keywords: [
+    "SEnC",
+    "Semana da Engenharia de Computação",
+    "Engenharia de Computação",
+    "USP São Carlos",
+    "eventos de tecnologia",
+  ],
+  authors: [{ name: "SEnC USP São Carlos" }],
+  creator: "SEnC USP São Carlos",
+  publisher: "SEnC USP São Carlos",
+  applicationName: "SEnC USP",
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    url: "/",
+    siteName: "SEnC USP São Carlos",
+    title: "X Semana da Engenharia de Computação | SEnC USP",
+    description:
+      "Participe da Semana da Engenharia de Computação da USP de São Carlos.",
+    images: [
+      {
+        url: "/logo-senc.webp",
+        alt: "Logo da Semana da Engenharia de Computação",
+      },
+    ],
+  },
+  icons: {
+    icon: "/logo-senc.webp",
+    apple: "/logo-senc.webp",
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body className={`${inter.className} bg-brand-light text-gray-900 overflow-x-hidden`}>
         <Navbar /> {/* <-- Add your component here */}
         <main className="min-h-screen">

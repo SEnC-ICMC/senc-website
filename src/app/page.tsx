@@ -45,8 +45,8 @@ export default function Home() {
           sizes="100vw"
         />
 
-        {/* Camada de Desfoque (Mais escura para destacar o texto branco) */}
-        <div className="absolute inset-0 bg-black/50 backdrop-blur-md z-10"></div>
+        {/* Overlay gradient (sem desfoque no mobile para manter a imagem nítida) */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/65 via-black/40 to-black/60 backdrop-blur-none md:bg-black/50 md:bg-none md:backdrop-blur-md"></div>
 
         {/* Conteúdo Central */}
         <div className="relative z-20 max-w-5xl px-4 flex flex-col items-center text-white drop-shadow-2xl -mt-24">
