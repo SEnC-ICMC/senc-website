@@ -29,6 +29,54 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.hero-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(7, 212, 106, 0.26) 0 1px, transparent 2px),
+    radial-gradient(circle at 14% 74%, rgba(0, 160, 255, 0.22) 0 1px, transparent 2px),
+    linear-gradient(135deg, #071711 0%, #0b2820 46%, #101735 100%);
+  background-size: 34px 34px, 46px 46px, auto;
+}
+
+.hero-backdrop::before {
+  position: absolute;
+  inset: -20%;
+  content: "";
+  background:
+    repeating-linear-gradient(115deg, transparent 0 58px, rgba(7, 212, 106, 0.12) 59px 60px, transparent 61px 118px),
+    repeating-linear-gradient(25deg, transparent 0 88px, rgba(80, 130, 255, 0.1) 89px 90px, transparent 91px 180px);
+  transform: rotate(-8deg);
+}
+
+.hero-backdrop::after {
+  position: absolute;
+  top: 12%;
+  right: -18%;
+  width: 76vw;
+  height: 76vw;
+  content: "";
+  border: 1px solid rgba(7, 212, 106, 0.3);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 28px rgba(7, 212, 106, 0.04),
+    0 0 0 56px rgba(7, 212, 106, 0.035);
+}
+
+@media (min-width: 768px) {
+  .hero-backdrop {
+    background-image: url("/foto-senc-25-bg.webp");
+    background-position: center;
+    background-size: cover;
+  }
+
+  .hero-backdrop::before,
+  .hero-backdrop::after {
+    display: none;
+  }
+}
+
 .hide-scroll-bar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
