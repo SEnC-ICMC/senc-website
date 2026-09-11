@@ -19,7 +19,7 @@ export default function MobileMenu() {
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className="p-2 text-gray-50 hover:text-green-400 focus:outline-none transition"
+        className="rounded-lg border border-white/15 bg-white/[0.06] p-2 text-gray-50 transition hover:border-[#07D46A]/60 hover:text-green-400 focus:outline-none focus:ring-2 focus:ring-[#07D46A]/50"
         aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
         aria-expanded={isOpen}
       >
@@ -33,7 +33,7 @@ export default function MobileMenu() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-3 right-3 top-[calc(100%+0.75rem)] flex flex-col gap-2 rounded-2xl border border-white/15 bg-gradient-to-br from-[#071d14]/95 via-[#171329]/95 to-[#080d22]/95 px-3 pb-4 pt-3 shadow-[0_18px_45px_rgba(0,0,0,0.35)] backdrop-blur-xl md:hidden">
+        <div className="absolute left-3 right-3 top-[calc(100%+0.75rem)] flex flex-col gap-2 rounded-2xl border border-[#07D46A]/30 bg-gradient-to-br from-[#071d14] via-[#101d28] to-[#080d22] px-3 pb-4 pt-3 shadow-[0_18px_45px_rgba(0,0,0,0.45)] md:hidden">
           <div className="h-1 w-16 self-center rounded-full bg-gradient-to-r from-[#07D46A] via-[#7634CA] to-[#0015E2] opacity-90" />
           {links.map((link) => (
             <Link

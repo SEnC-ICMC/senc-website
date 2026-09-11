@@ -5,13 +5,13 @@ import MobileMenu from './MobileMenu';
 export default function Navbar() {
   return (
     // FIX 1: Added bg-black/50 to ensure the background always stays dark enough for legibility
-    <nav className="relative bg-black/60 bg-gradient-to-r from-[#07D46A]/20 via-[#7634CA]/20 to-[#0015E2]/20 backdrop-blur-3xl border-b border-white/10 px-6 py-4 sticky top-0 z-50">
+    <nav className="relative sticky top-0 z-50 border-b border-[#07D46A]/25 bg-gradient-to-r from-[#071711] via-[#0d241e] to-[#111631] px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.18)] md:border-white/10 md:bg-black/60 md:px-6 md:py-4 md:shadow-none md:backdrop-blur-3xl">
       
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 font-black text-2xl text-white tracking-tight">
-          <Image src="/logo-senc.webp" alt="Logo SEnC" width={40} height={40} className="w-10 h-10 object-contain" />
+        <Link href="/" className="flex items-center gap-2.5 font-black text-xl tracking-tight text-white md:gap-3 md:text-2xl">
+          <Image src="/logo-senc.webp" alt="Logo SEnC" width={40} height={40} className="h-9 w-9 object-contain md:h-10 md:w-10" />
           <div>
             SEnC<span className="text-[#07D46A]">.2026</span>
           </div>

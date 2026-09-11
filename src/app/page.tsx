@@ -34,19 +34,11 @@ export default function Home() {
       */}
       <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
         
-        {/* Imagem de Fundo */}
-        <Image 
-          src="/foto-senc-25-bg.webp" 
-          alt="University Tech Fair Scene"
-          fill
-          className="object-cover"
-          quality={75}
-          priority 
-          sizes="100vw"
-        />
+        {/* The photo is loaded only on desktop; mobile uses the lightweight CSS artwork. */}
+        <div className="hero-backdrop" aria-hidden="true" />
 
-        {/* Overlay gradient (sem desfoque no mobile para manter a imagem nítida) */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/65 via-black/40 to-black/60 backdrop-blur-none md:bg-black/50 md:bg-none md:backdrop-blur-md"></div>
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/65 via-black/40 to-black/60 md:bg-black/50 md:bg-none md:backdrop-blur-md"></div>
 
         {/* Conteúdo Central */}
         <div className="relative z-20 max-w-5xl px-4 flex flex-col items-center text-white drop-shadow-2xl -mt-24">
