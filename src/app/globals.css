@@ -5,15 +5,17 @@
   --foreground: #171717;
 }
 
-/* Configure your brand theme here */
 @theme {
-  /* --color-[logical-name]: [hex-or-rgb-value]; */
-  --color-brand-green: #28A745;    
-  --color-brand-dark: #28282B; /* e.g., The main blue button color */
-  --color-brand-light: #F8F9FA;   /* e.g., The main background color */
-  --color-bg-brand-dark: #212529; /* e.g., The main background color for dark mode */
-  --color-text-brand-dark: #E9ECEF; /* e.g., The main text color for dark mode */
-  --color-bg-brand-light: #F8F9FA; /* e.g., The main background color for light mode */
+  --color-brand-green: #07D46A;
+  --color-brand-purple: #9E6CDF;
+  --color-brand-purple-deep: #7634CA;
+  --color-brand-blue: #0015E2;
+  --color-brand-black: #000000;
+  --color-brand-dark: #000000;
+  --color-brand-light: #F8F9FA;
+  --color-bg-brand-dark: #000000;
+  --color-text-brand-dark: #E9ECEF;
+  --color-bg-brand-light: #F8F9FA;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,7 +28,48 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ubuntu), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+.font-display {
+  font-family: var(--font-ubuntu), sans-serif;
+}
+
+.marker-highlight {
+  background-image: linear-gradient(transparent 58%, #07D46A 58%, #07D46A 91%, transparent 91%);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 100%;
+  animation: marker-slide-in 900ms cubic-bezier(0.22, 1, 0.36, 1) 500ms forwards;
+}
+
+@keyframes marker-slide-in {
+  from {
+    background-size: 0% 100%;
+  }
+
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marker-highlight {
+    animation: none;
+    background-size: 100% 100%;
+  }
 }
 
 .hero-backdrop {
@@ -34,34 +77,38 @@ body {
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 78% 18%, rgba(7, 212, 106, 0.26) 0 1px, transparent 2px),
-    radial-gradient(circle at 14% 74%, rgba(0, 160, 255, 0.22) 0 1px, transparent 2px),
-    linear-gradient(135deg, #071711 0%, #0b2820 46%, #101735 100%);
-  background-size: 34px 34px, 46px 46px, auto;
+    radial-gradient(ellipse at 52% 52%, rgba(7, 212, 106, 0.13) 0%, rgba(7, 212, 106, 0.04) 23%, transparent 44%),
+    #000000;
 }
 
 .hero-backdrop::before {
   position: absolute;
-  inset: -20%;
+  top: -18%;
+  left: 31%;
+  width: 38%;
+  height: 136%;
   content: "";
   background:
-    repeating-linear-gradient(115deg, transparent 0 58px, rgba(7, 212, 106, 0.12) 59px 60px, transparent 61px 118px),
-    repeating-linear-gradient(25deg, transparent 0 88px, rgba(80, 130, 255, 0.1) 89px 90px, transparent 91px 180px);
-  transform: rotate(-8deg);
+    radial-gradient(ellipse 70% 55% at 50% 50%, transparent 57%, rgba(118, 52, 202, 0.58) 57.5% 58.5%, transparent 59.5%),
+    radial-gradient(ellipse 76% 61% at 50% 50%, transparent 57%, rgba(0, 21, 226, 0.48) 57.5% 58.5%, transparent 59.5%),
+    radial-gradient(ellipse 82% 67% at 50% 50%, transparent 57%, rgba(92, 225, 230, 0.4) 57.5% 58.5%, transparent 59.5%),
+    radial-gradient(ellipse 88% 73% at 50% 50%, transparent 57%, rgba(7, 212, 106, 0.42) 57.5% 58.5%, transparent 59.5%);
+  transform: rotate(-11deg);
 }
 
 .hero-backdrop::after {
   position: absolute;
-  top: 12%;
-  right: -18%;
-  width: 76vw;
-  height: 76vw;
+  inset: 0;
   content: "";
-  border: 1px solid rgba(7, 212, 106, 0.3);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 28px rgba(7, 212, 106, 0.04),
-    0 0 0 56px rgba(7, 212, 106, 0.035);
+  background:
+    repeating-radial-gradient(ellipse 44% 58% at 52% 50%, transparent 0 26px, rgba(7, 212, 106, 0.12) 27px 28px, transparent 29px 50px),
+    radial-gradient(ellipse 32% 48% at 50% 52%, rgba(7, 212, 106, 0.1), transparent 68%);
+  opacity: 0.72;
+}
+
+.hero-backdrop:has(canvas)::before,
+.hero-backdrop:has(canvas)::after {
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -78,9 +125,10 @@ body {
 }
 
 .hide-scroll-bar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
 .hide-scroll-bar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
 }
