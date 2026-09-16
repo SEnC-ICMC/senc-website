@@ -3,7 +3,6 @@ import Link from "next/link";
 import ContactForm from '../components/ContactForm';
 import ScrollReveal from '../components/ScrollReveal';
 import CountdownTimer from '../components/CountdownTimer';
-import HeroMesh from '../components/HeroMesh';
 
 // 1. SPLIT YOUR MOCK DATA INTO TWO ARRAYS
 const realizadores = [
@@ -36,9 +35,7 @@ export default function Home() {
       <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
         
         {/* The photo is loaded only on desktop; mobile uses the lightweight CSS artwork. */}
-        <div className="hero-backdrop" aria-hidden="true">
-          <HeroMesh />
-        </div>
+        <div className="hero-backdrop" aria-hidden="true" />
 
         {/* Overlay gradient */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/65 via-black/40 to-black/60 md:bg-black/50 md:bg-none md:backdrop-blur-md"></div>

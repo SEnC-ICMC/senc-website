@@ -77,6 +77,9 @@ section[id] {
   inset: 0;
   overflow: hidden;
   background:
+    radial-gradient(ellipse at 18% 22%, rgba(158, 108, 223, 0.2), transparent 34%),
+    radial-gradient(ellipse at 82% 34%, rgba(0, 21, 226, 0.22), transparent 36%),
+    radial-gradient(ellipse at 52% 72%, rgba(92, 225, 230, 0.12), transparent 34%),
     radial-gradient(ellipse at 52% 52%, rgba(7, 212, 106, 0.13) 0%, rgba(7, 212, 106, 0.04) 23%, transparent 44%),
     #000000;
 }
@@ -101,14 +104,30 @@ section[id] {
   inset: 0;
   content: "";
   background:
+    radial-gradient(circle at 8% 16%, rgba(255, 255, 255, 0.86) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 14% 67%, rgba(92, 225, 230, 0.82) 0 1.5px, transparent 2.2px),
+    radial-gradient(circle at 25% 47%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 39% 13%, rgba(158, 108, 223, 0.9) 0 1.5px, transparent 2.2px),
+    radial-gradient(circle at 47% 84%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 58% 18%, rgba(92, 225, 230, 0.86) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 63% 57%, rgba(255, 255, 255, 0.82) 0 1.5px, transparent 2.2px),
+    radial-gradient(circle at 77% 82%, rgba(158, 108, 223, 0.86) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 92% 69%, rgba(255, 255, 255, 0.76) 0 1.5px, transparent 2.2px),
+    linear-gradient(rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)) 11% 38% / 1px 13px no-repeat,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.72)) 11% 38% / 13px 1px no-repeat,
+    linear-gradient(rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.68)) 88% 19% / 1px 15px no-repeat,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.68)) 88% 19% / 15px 1px no-repeat,
+    linear-gradient(27deg, transparent 0 37%, rgba(92, 225, 230, 0.34) 37.15% 37.35%, transparent 37.5%),
+    linear-gradient(-32deg, transparent 0 58%, rgba(158, 108, 223, 0.34) 58.15% 58.35%, transparent 58.5%),
+    radial-gradient(circle at 18% 31%, rgba(92, 225, 230, 0.9) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 31% 22%, rgba(158, 108, 223, 0.82) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 73% 27%, rgba(0, 21, 226, 0.82) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 84% 43%, rgba(7, 212, 106, 0.9) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 67% 72%, rgba(92, 225, 230, 0.82) 0 2px, transparent 2.8px),
+    radial-gradient(circle at 29% 78%, rgba(158, 108, 223, 0.86) 0 2px, transparent 2.8px),
     repeating-radial-gradient(ellipse 44% 58% at 52% 50%, transparent 0 26px, rgba(7, 212, 106, 0.12) 27px 28px, transparent 29px 50px),
     radial-gradient(ellipse 32% 48% at 50% 52%, rgba(7, 212, 106, 0.1), transparent 68%);
   opacity: 0.72;
-}
-
-.hero-backdrop:has(canvas)::before,
-.hero-backdrop:has(canvas)::after {
-  display: none;
 }
 
 @media (min-width: 768px) {
