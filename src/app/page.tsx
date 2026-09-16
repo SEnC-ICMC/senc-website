@@ -3,6 +3,7 @@ import Link from "next/link";
 import ContactForm from '../components/ContactForm';
 import ScrollReveal from '../components/ScrollReveal';
 import CountdownTimer from '../components/CountdownTimer';
+import HeroMesh from '../components/HeroMesh';
 
 // 1. SPLIT YOUR MOCK DATA INTO TWO ARRAYS
 const realizadores = [
@@ -35,7 +36,9 @@ export default function Home() {
       <section id="hero" className="relative w-full min-h-screen flex flex-col items-center justify-center text-center overflow-hidden">
         
         {/* The photo is loaded only on desktop; mobile uses the lightweight CSS artwork. */}
-        <div className="hero-backdrop" aria-hidden="true" />
+        <div className="hero-backdrop" aria-hidden="true">
+          <HeroMesh />
+        </div>
 
         {/* Overlay gradient */}
         <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/65 via-black/40 to-black/60 md:bg-black/50 md:bg-none md:backdrop-blur-md"></div>
@@ -43,17 +46,17 @@ export default function Home() {
         {/* Conteúdo Central */}
         <div className="relative z-20 max-w-5xl px-4 flex flex-col items-center text-white drop-shadow-2xl -mt-24">
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-tight tracking-tighter">
-            <span className="text-[#07D46A]">X</span> Semana da <br className="hidden md:block" /> Engenharia de Computação
+          <h1 className="font-display text-5xl font-bold uppercase leading-tight tracking-wide md:text-7xl lg:text-8xl">
+            <span className="text-brand-green">X</span> Semana da <br className="hidden md:block" /> <span className="marker-highlight">Engenharia</span> de Computação
           </h1>
           
-          <p className="mt-8 text-lg md:text-2xl font-medium tracking-widest bg-white/10 backdrop-blur-md border border-white/20 px-8 py-3 rounded-full">
+          <p className="font-display mt-8 rounded-full border border-brand-green bg-black/35 px-8 py-3 text-lg font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_18px_rgba(7,212,106,0.18)] md:px-12 md:text-2xl">
             21 a 25 de Setembro de 2026
           </p>
           
           <Link 
             href="/participant/new-registration" 
-            className="mt-12 bg-[#07D46A] text-[#0D1713] px-12 py-4 rounded-full text-xl font-bold uppercase shadow-lg transition-all duration-300 hover:bg-green-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(7,212,106,0.5)]"
+            className="mt-12 bg-brand-green text-brand-black px-12 py-4 rounded-full text-xl font-bold uppercase shadow-lg transition-all duration-300 hover:bg-green-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(7,212,106,0.5)]"
           >
             Inscreva-se
           </Link>
@@ -252,7 +255,7 @@ export default function Home() {
       */}
       <footer className="w-full bg-[#080d0a] py-8 border-t border-white/5 text-center flex flex-col items-center">
         <p className="text-gray-500 text-sm">
-          © 2026 X Semana da Engenharia de Computação. Todos os direitos reservados.
+          © 2026 X Semana da Engenharia de Computação.
         </p>
         <p className="text-gray-600 text-xs mt-2">
           Desenvolvido em São Carlos, SP.

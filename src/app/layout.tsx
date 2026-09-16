@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar"; // <-- Add this import
 
-const inter = Inter({ subsets: ["latin"] });
+const ubuntu = Ubuntu({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-ubuntu",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
@@ -56,7 +60,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.className} bg-brand-light text-gray-900 overflow-x-hidden`}>
+      <body className={`${ubuntu.className} ${ubuntu.variable} bg-brand-light text-gray-900 overflow-x-hidden`}>
         <Navbar /> {/* <-- Add your component here */}
         <main className="min-h-screen">
           {children} {/* This is where page.tsx gets injected */}

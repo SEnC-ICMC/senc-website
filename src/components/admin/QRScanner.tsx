@@ -17,12 +17,13 @@ type ScanStatus =
 
 interface QRScannerProps {
   eventId: number;
+  onAttendanceRegistered?: () => void;
 }
 
 const READER_ELEMENT_ID = 'qr-reader';
 const RESUME_DELAY_MS = 2200;
 
-export default function QRScanner({ eventId }: QRScannerProps) {
+export default function QRScanner({ eventId, onAttendanceRegistered }: QRScannerProps) {
   const [status, setStatus] = useState<ScanStatus>('idle');
   const [message, setMessage] = useState<string>('');
   const [isActive, setIsActive] = useState(false);
@@ -97,6 +98,7 @@ export default function QRScanner({ eventId }: QRScannerProps) {
 
     setStatus('success');
     setMessage(`Presença registrada: ${participant.name}`);
+    onAttendanceRegistered?.();
     scheduleResume();
   };
 
@@ -111,7 +113,13 @@ export default function QRScanner({ eventId }: QRScannerProps) {
     try {
       await scanner.start(
         { facingMode: 'environment' },
-        { fps: 10, qrbox: { width: 280, height: 280 } },
+        {
+          fps: 10,
+          qrbox: (viewfinderWidth, viewfinderHeight) => {
+            const size = Math.floor(Math.min(viewfinderWidth, viewfinderHeight) * 0.68);
+            return { width: size, height: size };
+          },
+        },
         handleDecode,
         () => {
           // Fires continuously while no QR is in frame — expected, not an error.
@@ -154,30 +162,55 @@ export default function QRScanner({ eventId }: QRScannerProps) {
   }, []);
 
   return (
-    <div className="w-full">
-      <div className="relative w-full aspect-video max-w-md mx-auto bg-black border border-white/10 rounded-lg overflow-hidden shadow-[0_0_40px_-12px_rgba(168,85,247,0.5)]">
+    <div className="qr-scanner w-full [&_#qr-shaded-region]:hidden">
+      <div className="relative mx-auto min-h-[18rem] aspect-[5/4] w-full max-w-xl overflow-hidden rounded-xl border border-black/40 bg-[#050807] sm:min-h-[24rem] sm:aspect-[4/3]">
         <div id={READER_ELEMENT_ID} className="w-full h-full" />
 
+        {isActive && status === 'scanning' && (
+          <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center">
+            <div className="relative aspect-square w-[min(62vw,22rem)] rounded-xl border-2 border-green-400 shadow-[0_0_0_999px_rgba(0,0,0,0.3)]">
+              <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-green-400 rounded-full" />
+              <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-green-400 rounded-full" />
+            </div>
+            <span className="mt-5 rounded-full bg-black/75 px-4 py-2 text-sm font-semibold text-white">
+              Posicione o QR code dentro da moldura
+            </span>
+          </div>
+        )}
+
         {!isActive && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/90">
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 text-center px-6">
+            <div className="mb-5 flex h-12 w-16 items-center justify-center rounded-lg border border-white/15 bg-white/[0.04]">
+              <span className="relative h-6 w-9 rounded-md border-2 border-gray-300/80">
+                <span className="absolute -top-1.5 left-2 h-1.5 w-3 rounded-t-sm bg-gray-300/80" />
+                <span className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-green-400/80" />
+              </span>
+            </div>
+            <p className="text-lg font-bold text-white">Câmera pronta para o check-in</p>
+            <p className="mt-2 max-w-sm text-sm text-gray-400">
+              Deixe o leitor aberto e peça para cada participante mostrar o QR code nesta área.
+            </p>
             <button
               onClick={handleActivate}
               disabled={status === 'starting'}
-              className="text-sm font-bold px-5 py-2.5 rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition disabled:opacity-50"
+              className="mt-6 rounded-lg bg-green-400 px-6 py-3 text-sm font-black text-black transition hover:bg-green-300 disabled:opacity-50"
             >
-              {status === 'starting' ? 'Ativando câmera...' : 'Ativar leitor'}
+              {status === 'starting' ? 'Ativando câmera...' : 'Ativar câmera'}
             </button>
           </div>
         )}
       </div>
 
-      <div className="mt-4 min-h-[3rem] flex flex-col items-center justify-center text-center px-4 gap-2">
+      <div className="mt-5 min-h-[5.5rem] flex flex-col items-center justify-center text-center px-4 gap-2">
         {status === 'scanning' && (
-          <span className="text-gray-500 text-sm">Aponte a câmera para o QR code do participante.</span>
+          <span className="inline-flex items-center gap-2 text-green-400 text-sm font-bold">
+            <span className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.9)]" />
+            Leitor ativo · aguardando próximo participante
+          </span>
         )}
         {status === 'processing' && <span className="text-gray-400 text-sm">Verificando...</span>}
         {status === 'success' && <span className="text-green-400 font-bold">{message}</span>}
-        {status === 'duplicate' && <span className="text-yellow-400 font-bold">{message}</span>}
+        {status === 'duplicate' && <span className="text-[#5ce1e6] font-bold">{message}</span>}
         {status === 'not_found' && <span className="text-red-400 font-bold">{message}</span>}
         {status === 'error' && <span className="text-red-400 font-bold">{message}</span>}
         {status === 'camera_denied' && (

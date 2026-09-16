@@ -4,8 +4,7 @@ import MobileMenu from './MobileMenu';
 
 export default function Navbar() {
   return (
-    // FIX 1: Added bg-black/50 to ensure the background always stays dark enough for legibility
-    <nav className="relative sticky top-0 z-50 border-b border-[#07D46A]/25 bg-gradient-to-r from-[#071711] via-[#0d241e] to-[#111631] px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.18)] md:border-white/10 md:bg-black/60 md:px-6 md:py-4 md:shadow-none md:backdrop-blur-3xl">
+    <nav className="relative sticky top-0 z-50 border-b border-brand-green/25 bg-gradient-to-r from-black via-[#071711] to-[#080d22] px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.18)] md:border-brand-green/20 md:px-6 md:py-4 md:shadow-[0_8px_24px_rgba(0,0,0,0.24)] md:backdrop-blur-3xl">
       
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         
@@ -13,7 +12,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5 font-black text-xl tracking-tight text-white md:gap-3 md:text-2xl">
           <Image src="/logo-senc.webp" alt="Logo SEnC" width={40} height={40} className="h-9 w-9 object-contain md:h-10 md:w-10" />
           <div>
-            SEnC<span className="text-[#07D46A]">.2026</span>
+            SEnC<span className="text-brand-green"> 2026</span>
           </div>
         </Link>
 
@@ -30,10 +29,6 @@ export default function Navbar() {
             Sobre
           </Link>
 
-          <Link href="/schedule" className="font-medium text-gray-50 drop-shadow-md hover:text-green-400 transition duration-200">
-            Programação
-          </Link>
-
           <Link href="/#sponsors" className="font-medium text-gray-50 drop-shadow-md hover:text-green-400 transition duration-200">
             Patrocinadores
           </Link>
@@ -43,8 +38,15 @@ export default function Navbar() {
           </Link>
 
           <Link
+            href="/schedule"
+            className="rounded-full border border-brand-green/70 bg-brand-green px-5 py-2.5 text-sm font-bold text-brand-black shadow-[0_0_18px_rgba(7,212,106,0.2)] transition hover:bg-green-300 hover:shadow-[0_0_24px_rgba(7,212,106,0.35)]"
+          >
+            Programação
+          </Link>
+
+          <Link
             href="/participant/new-registration"
-            className="bg-green-400 hover:bg-green-300 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg hover:shadow-green-400/20"
+            className="bg-brand-green hover:bg-green-400 text-black font-bold text-sm px-5 py-2.5 rounded-full shadow-md transition-all hover:shadow-lg hover:shadow-brand-green/20"
           >
             Área do Participante
           </Link>

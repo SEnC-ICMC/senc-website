@@ -84,16 +84,16 @@ export default function ParticipantDashboard() {
 
       {/* Soft Dark Header */}
       <div className="relative bg-gray-900 text-white pt-12 pb-24 px-6 overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-green-400" />
+        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand-purple-deep via-brand-blue to-brand-green" />
 
         <div className="relative z-10 max-w-5xl mx-auto flex justify-between items-start">
           <ScrollReveal>
-            <span className="block text-xs font-bold uppercase tracking-[0.3em] text-purple-400 mb-2">
+            <span className="block text-xs font-bold uppercase tracking-[0.3em] text-brand-purple mb-2">
               X Edition
             </span>
             <div className="flex items-center gap-3 mb-2 flex-wrap">
               <h1 className="text-4xl font-extrabold tracking-tight">
-                Olá, <span className="text-green-400">{userName}</span>!
+                Olá, <span className="text-brand-green">{userName}</span>!
               </h1>
               <span className={`px-3 py-1 rounded-full text-xs font-bold ${isUspAccount ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30' : 'bg-gray-700 text-gray-300'}`}>
                 {isUspAccount ? 'Aluno USP' : 'Externo'}
@@ -104,7 +104,7 @@ export default function ParticipantDashboard() {
             {isAdmin && (
               <Link
                 href="/admin"
-                className="inline-block mt-4 text-sm font-bold text-purple-300 hover:text-black hover:bg-purple-400 border border-purple-400 transition px-4 py-2 rounded-full"
+                className="inline-block mt-4 text-sm font-bold text-brand-purple hover:text-white hover:bg-brand-purple-deep border border-brand-purple transition px-4 py-2 rounded-full"
               >
                 Entrar no modo admin
               </Link>
@@ -145,10 +145,10 @@ export default function ParticipantDashboard() {
               aria-label="Ampliar QR code para facilitar a leitura"
             >
               {/* Corner brackets echoing the admin scanner's viewfinder — this is the badge that frame will scan */}
-              <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-purple-400 rounded-tl-md" />
-              <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-purple-400 rounded-tr-md" />
-              <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-green-400 rounded-bl-md" />
-              <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-green-400 rounded-br-md" />
+              <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-brand-purple rounded-tl-md" />
+              <div className="absolute -top-2 -right-2 w-6 h-6 border-t-2 border-r-2 border-brand-purple rounded-tr-md" />
+              <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-brand-green rounded-bl-md" />
+              <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-brand-green rounded-br-md" />
 
               <div className="bg-white p-4 rounded-xl shadow-inner border-2 border-gray-50 transition group-hover:shadow-lg group-hover:scale-[1.02]">
                 {userId ? (
@@ -159,7 +159,7 @@ export default function ParticipantDashboard() {
               </div>
             </div>
 
-            <p className="text-xs font-semibold text-purple-500 -mt-3 mb-3 uppercase tracking-wide">
+            <p className="text-xs font-semibold text-brand-purple-deep -mt-3 mb-3 uppercase tracking-wide">
               Toque para ampliar
             </p>
 

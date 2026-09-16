@@ -99,7 +99,7 @@ export default function EventPicker({ selectedEventId, onSelectEvent }: EventPic
   const now = new Date();
 
   return (
-    <div className="w-full text-left space-y-6">
+    <div className="w-full text-left space-y-7">
       {SECTIONS.map(({ label, status, limit, takeFrom }) => {
         let filtered = events.filter((e) => getEventStatus(e, now) === status);
         if (filtered.length === 0) return null;
@@ -110,36 +110,57 @@ export default function EventPicker({ selectedEventId, onSelectEvent }: EventPic
           filtered = takeFrom === 'end' ? filtered.slice(-limit) : filtered.slice(0, limit);
         }
 
+        const statusLabel = status === 'now' ? 'Agora' : status === 'upcoming' ? 'Em breve' : 'Encerrado';
+        const statusStyle = status === 'now'
+          ? 'bg-green-400/15 text-green-300 border-green-400/25'
+          : status === 'upcoming'
+            ? 'bg-blue-400/15 text-blue-300 border-blue-400/25'
+            : 'bg-white/5 text-gray-400 border-white/10';
+
         return (
           <div key={status}>
-            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">
-              {label}
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <h3 className="text-sm font-black uppercase tracking-widest text-gray-400">
+                {label}
+              </h3>
               {hiddenCount > 0 && (
-                <span className="normal-case font-normal text-gray-600">
-                  {' '}
-                  · +{hiddenCount} não exibido{hiddenCount > 1 ? 's' : ''}
+                <span className="text-xs text-gray-500">
+                  +{hiddenCount} não exibido{hiddenCount > 1 ? 's' : ''}
                 </span>
               )}
-            </h3>
-            <div className="space-y-2">
+            </div>
+            <div className="space-y-3">
               {filtered.map((event) => {
                 const isSelected = event.id === selectedEventId;
                 return (
                   <button
                     key={event.id}
                     onClick={() => onSelectEvent(event.id)}
-                    className={`w-full text-left p-4 rounded-lg border transition ${
+                    className={`group w-full rounded-xl border p-4 text-left shadow-sm transition sm:p-5 ${
                       isSelected
-                        ? 'bg-gradient-to-r from-purple-500/10 to-green-400/10 border-green-400 text-green-300'
-                        : 'bg-white/[0.02] border-white/10 hover:border-purple-400/60 text-gray-200'
+                        ? 'border-green-400/80 bg-green-400/10 text-white shadow-[0_0_24px_-14px_rgba(7,212,106,0.9)]'
+                        : 'border-white/10 bg-white/[0.025] text-gray-200 hover:border-blue-400/60 hover:bg-white/[0.06]'
                     }`}
                   >
-                    <div className="flex justify-between items-center gap-4">
-                      <span className="font-bold">{event.title}</span>
-                      <span className="text-xs text-gray-400 whitespace-nowrap">{event.time_display}</span>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="mb-2 flex flex-wrap items-center gap-2">
+                          <span className={`rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-wider ${statusStyle}`}>
+                            {statusLabel}
+                          </span>
+                          {isSelected && (
+                            <span className="text-xs font-bold text-green-300">Selecionado</span>
+                          )}
+                        </div>
+                        <span className="block font-bold leading-snug text-white group-hover:text-green-300 transition-colors">
+                          {event.title}
+                        </span>
+                      </div>
+                      <span className="shrink-0 text-sm font-bold text-gray-300 whitespace-nowrap">{event.time_display}</span>
                     </div>
-                    <div className="text-sm text-gray-400 mt-1">
-                      {event.speaker} · {event.location}
+                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-white/10 pt-3 text-sm text-gray-400">
+                      <span>{event.speaker}</span>
+                      <span>{event.location}</span>
                     </div>
                   </button>
                 );

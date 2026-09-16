@@ -91,7 +91,7 @@ export default function Programacao() {
               onClick={() => setActiveDay(day.id)}
               className={`flex flex-col items-center justify-center min-w-[70px] md:min-w-[100px] py-3 px-4 rounded-xl font-bold transition-all duration-200 ${
                 activeDay === day.id
-                  ? 'bg-green-500 text-brand-dark shadow-lg scale-105'
+                  ? 'bg-brand-green text-brand-dark shadow-lg scale-105'
                   : 'bg-white text-gray-500 border border-gray-200 hover:bg-gray-100'
               }`}
             >
@@ -150,7 +150,7 @@ export default function Programacao() {
       </div>
 
       <div className="text-center mt-16">
-          <Link href="/" className="text-green-600 font-bold hover:underline">
+          <Link href="/" className="text-brand-purple-deep font-bold hover:text-brand-blue hover:underline">
             &larr; Voltar para a Home
           </Link>
       </div>
