@@ -14,11 +14,27 @@ interface Event {
   id: number;
   title: string;
   speaker: string | null;
+  speaker_url?: string | null;
+  description?: string | null;
+  business_name?: string | null;
+  business_url?: string | null;
   event_type: string;
   location: string;
   event_day: string;
   time_display: string;
   color_theme: string;
+}
+
+const EVENT_TAG_STYLES: Record<string, string> = {
+  institucional: 'bg-blue-100 text-blue-800',
+  palestra: 'bg-green-100 text-green-800',
+  networking: 'bg-red-100 text-red-800',
+  minicurso: 'bg-purple-100 text-purple-800',
+  visita: 'bg-yellow-100 text-yellow-800',
+};
+
+function getEventTagStyle(eventType: string) {
+  return EVENT_TAG_STYLES[eventType.trim().toLowerCase()] || 'bg-gray-100 text-gray-500';
 }
 
 // The navigation tabs (These stay static to define the week's dates)
@@ -36,6 +52,7 @@ export default function Programacao() {
     segunda: [], terca: [], quarta: [], quinta: [], sexta: []
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
 
   // Fetch data from Supabase on component mount
   useEffect(() => {
@@ -112,35 +129,91 @@ export default function Programacao() {
           </div>
         ) : currentEvents.length > 0 ? (
           <div className="space-y-6">
-            {currentEvents.map((event) => (
-              <div 
-                key={event.id} 
-                className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex flex-col md:flex-row md:items-center gap-6 hover:shadow-md transition-shadow"
-              >
-                {/* Time & Type Block */}
-                <div className="md:w-48 flex-shrink-0 flex flex-col items-start">
-                  <span className="text-lg font-black text-gray-900 tracking-tight">{event.time_display}</span>
-                  <span className={`mt-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${event.color_theme}`}>
-                    {event.event_type}
-                  </span>
-                </div>
+            {currentEvents.map((event) => {
+              const hasEventDetails = [
+                event.description,
+                event.speaker_url,
+                event.business_name,
+                event.business_url,
+              ].some((value) => Boolean(value?.trim()));
 
-                {/* Event Details */}
-                <div className="flex-grow">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{event.title}</h3>
-                  {event.speaker && (
-                    <p className="text-gray-600 font-medium mb-2">{event.speaker}</p>
-                  )}
-                  <div className="flex items-center text-sm text-gray-500 font-medium mt-3">
-                    <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    {event.location}
+              const eventSummary = (
+                <>
+                  <div className="flex-shrink-0 md:w-48">
+                    <span className="text-lg font-black tracking-tight text-gray-900">{event.time_display}</span>
+                    <span className={`mt-2 block w-fit rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${getEventTagStyle(event.event_type)}`}>
+                      {event.event_type}
+                    </span>
                   </div>
-                </div>
-              </div>
-            ))}
+
+                  <div className="min-w-0 flex-grow">
+                    <h3 className="mb-1 text-xl font-bold text-gray-900">{event.title}</h3>
+                    {event.speaker && (
+                      <p className="mb-2 font-medium text-gray-600">{event.speaker}</p>
+                    )}
+                    <div className="mt-3 flex items-center text-sm font-medium text-gray-500">
+                      <svg className="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      {event.location}
+                    </div>
+                  </div>
+
+                </>
+              );
+
+              return (
+                <article
+                  key={event.id}
+                  className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                >
+                  {hasEventDetails ? (
+                    <button
+                      type="button"
+                      aria-expanded={expandedEventId === event.id}
+                      aria-controls={`event-details-${event.id}`}
+                      onClick={() => setExpandedEventId((currentId) => currentId === event.id ? null : event.id)}
+                      className="flex w-full flex-col gap-6 p-6 text-left md:flex-row md:items-center"
+                    >
+                      {eventSummary}
+                      <span className="flex-shrink-0 text-sm font-bold text-brand-purple-deep">
+                        {expandedEventId === event.id ? 'Fechar' : 'Ver detalhes'}
+                      </span>
+                    </button>
+                  ) : (
+                    <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center">
+                      {eventSummary}
+                    </div>
+                  )}
+
+                {hasEventDetails && expandedEventId === event.id && (
+                  <div id={`event-details-${event.id}`} className="border-t border-gray-100 bg-gray-50 px-6 py-5">
+                    {event.description ? (
+                      <p className="max-w-3xl whitespace-pre-line text-gray-700">{event.description}</p>
+                    ) : (
+                      <p className="text-gray-500">Mais informações sobre este evento serão divulgadas em breve.</p>
+                    )}
+
+                    {(event.speaker_url || event.business_url) && (
+                      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+                        {event.speaker_url && event.speaker && (
+                          <a href={event.speaker_url} target="_blank" rel="noreferrer" className="text-brand-blue hover:underline">
+                            Conheça {event.speaker}
+                          </a>
+                        )}
+                        {event.business_url && (
+                          <a href={event.business_url} target="_blank" rel="noreferrer" className="text-brand-purple-deep hover:underline">
+                            {event.business_name || 'Saiba mais sobre a organização'}
+                          </a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+                </article>
+              );
+            })}
           </div>
         ) : (
           <div className="text-center py-20 bg-white rounded-2xl border border-gray-200 border-dashed">
