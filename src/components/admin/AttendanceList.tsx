@@ -10,7 +10,7 @@ interface AttendanceRecord {
   participants: {
     name: string;
     email: string;
-  }[];
+  };
 }
 
 interface TargetEvent {
@@ -64,7 +64,7 @@ export default function AttendanceList({ eventId, refreshToken }: AttendanceList
       if (error) {
         setErrorMessage('Não foi possível carregar a lista de presentes.');
       } else {
-        setAttendance((data ?? []) as AttendanceRecord[]);
+        setAttendance((data ?? []) as unknown as AttendanceRecord[]);
       }
       setIsLoading(false);
     };
@@ -81,14 +81,14 @@ export default function AttendanceList({ eventId, refreshToken }: AttendanceList
     if (!normalizedSearch) return attendance;
 
     return attendance.filter((record) => {
-      const participant = record.participants[0];
+      const participant = record.participants;
       return participant?.name.toLocaleLowerCase().includes(normalizedSearch)
         || participant?.email.toLocaleLowerCase().includes(normalizedSearch);
     });
   }, [attendance, search]);
 
   const handleRemove = async (record: AttendanceRecord) => {
-    const participantName = record.participants[0]?.name ?? 'este participante';
+    const participantName = record.participants?.name ?? 'este participante';
     if (!window.confirm(`Remover a presença de ${participantName}?`)) return;
 
     setRemovingId(record.id);
@@ -257,7 +257,7 @@ export default function AttendanceList({ eventId, refreshToken }: AttendanceList
         ) : (
           <div className="divide-y divide-white/10">
             {filteredAttendance.map((record) => {
-              const participant = record.participants[0];
+              const participant = record.participants;
               return (
                 <div key={record.id} className="flex flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
                   <div className="min-w-0">
