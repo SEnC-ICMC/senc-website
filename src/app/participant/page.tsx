@@ -74,37 +74,36 @@ export default function ParticipantDashboard() {
   }, [isZoomed]);
 
   if (isLoading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-gray-500 font-medium">Carregando painel...</div>;
+    return <div className="flex min-h-screen items-center justify-center bg-brand-light font-medium text-gray-500">Carregando painel...</div>;
   }
 
   const isUspAccount = userEmail.endsWith('@usp.br');
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-20">
+    <main className="min-h-screen bg-[#f1f3f6] pb-20 text-gray-900">
 
-      {/* Soft Dark Header */}
-      <div className="relative bg-gray-900 text-white pt-12 pb-24 px-6 overflow-hidden">
-        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-brand-purple-deep via-brand-blue to-brand-green" />
+      <div className="relative overflow-hidden border-b border-[#29342e] bg-gradient-to-br from-[#0c0714] via-[#0b1024] to-[#07101d] px-6 pb-24 pt-12 text-white">
+        <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-brand-purple-deep to-brand-blue" />
 
         <div className="relative z-10 max-w-5xl mx-auto flex justify-between items-start">
           <ScrollReveal>
-            <span className="block text-xs font-bold uppercase tracking-[0.3em] text-brand-purple mb-2">
-              X Edition
+            <span className="mb-2 block text-xs font-bold uppercase tracking-[0.3em] text-[#5ce1e6]">
+              Área do participante
             </span>
             <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <h1 className="text-4xl font-extrabold tracking-tight">
-                Olá, <span className="text-brand-green">{userName}</span>!
+              <h1 className="text-4xl font-extrabold tracking-tight text-white">
+                Olá, <span className="text-brand-green">{userName}</span>
               </h1>
-              <span className={`px-3 py-1 rounded-full text-xs font-bold ${isUspAccount ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30' : 'bg-gray-700 text-gray-300'}`}>
+              <span className={`rounded-full border px-3 py-1 text-xs font-bold ${isUspAccount ? 'border-[#5ce1e6]/30 bg-[#5ce1e6]/10 text-[#5ce1e6]' : 'border-white/10 bg-white/5 text-gray-400'}`}>
                 {isUspAccount ? 'Aluno USP' : 'Externo'}
               </span>
             </div>
-            <p className="text-gray-400 text-lg">Acompanhe seu progresso na X SEnC.</p>
+            <p className="text-lg text-gray-400">Acompanhe seu progresso na X SEnC.</p>
 
             {isAdmin && (
               <Link
                 href="/admin"
-                className="inline-block mt-4 text-sm font-bold text-brand-purple hover:text-white hover:bg-brand-purple-deep border border-brand-purple transition px-4 py-2 rounded-full"
+                className="mt-4 inline-block rounded-lg border border-brand-purple/60 px-4 py-2 text-sm font-bold text-brand-purple transition hover:bg-brand-purple-deep hover:text-white"
               >
                 Entrar no modo admin
               </Link>
@@ -113,7 +112,7 @@ export default function ParticipantDashboard() {
 
           <button
             onClick={() => supabase.auth.signOut().then(() => window.location.href = '/')}
-            className="shrink-0 text-sm font-bold text-gray-400 hover:text-white transition bg-white/10 px-4 py-2 rounded-full"
+            className="shrink-0 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-gray-400 transition hover:border-brand-green/40 hover:text-white"
           >
             Sair
           </button>
@@ -124,9 +123,9 @@ export default function ParticipantDashboard() {
 
         {/* Credential Card */}
         <ScrollReveal>
-          <div className="relative bg-white px-8 py-4 rounded-2xl shadow-xl border border-gray-100 flex flex-col items-center text-center h-fit overflow-hidden">
+            <div className="relative flex h-fit flex-col items-center overflow-hidden rounded-xl border border-gray-200 bg-white px-8 py-4 text-center shadow-[0_18px_42px_rgba(25,40,32,0.14)]">
 
-            <h2 className="text-lg font-bold text-gray-800 mb-6 tracking-wide mt-2">Credencial de Acesso</h2>
+            <h2 className="mt-2 mb-6 text-lg font-bold tracking-wide text-gray-900">Credencial de Acesso</h2>
 
             <div
               className="relative mb-6 cursor-pointer group focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 rounded-xl"
@@ -150,11 +149,11 @@ export default function ParticipantDashboard() {
               <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-2 border-l-2 border-brand-green rounded-bl-md" />
               <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-brand-green rounded-br-md" />
 
-              <div className="bg-white p-4 rounded-xl shadow-inner border-2 border-gray-50 transition group-hover:shadow-lg group-hover:scale-[1.02]">
+              <div className="rounded-xl border-2 border-gray-100 bg-white p-4 shadow-inner transition group-hover:scale-[1.02] group-hover:shadow-lg">
                 {userId ? (
                   <QRCode value={userId} size={200} level="H" />
                 ) : (
-                  <div className="w-[200px] h-[200px] bg-gray-100 flex items-center justify-center text-gray-400 text-sm rounded-lg">Erro</div>
+                  <div className="flex h-[200px] w-[200px] items-center justify-center rounded-lg bg-gray-100 text-sm text-gray-400">Erro</div>
                 )}
               </div>
             </div>
@@ -163,10 +162,10 @@ export default function ParticipantDashboard() {
               Toque para ampliar
             </p>
 
-            <p className="text-sm text-gray-500 font-medium">
+            <p className="text-sm font-medium text-gray-500">
               Apresente este código para registrar sua presença.
             </p>
-            <p className="text-xs text-gray-400 mt-2">{userEmail}</p>
+            <p className="mt-2 text-xs text-gray-500">{userEmail}</p>
           </div>
         </ScrollReveal>
 
@@ -174,46 +173,46 @@ export default function ParticipantDashboard() {
         <div className="flex flex-col gap-8">
 
           <ScrollReveal delay={80}>
-            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-[0_18px_42px_rgba(25,40,32,0.14)]">
               <div className="flex justify-between items-end mb-4">
-                <h2 className="text-lg font-bold text-gray-800 tracking-wide">Frequência Geral</h2>
-                <span className="text-3xl font-black bg-gradient-to-r from-purple-500 to-green-500 bg-clip-text text-transparent">
+                <h2 className="text-lg font-bold tracking-wide text-gray-900">Frequência Geral</h2>
+                <span className="bg-gradient-to-r from-brand-purple-deep to-brand-blue bg-clip-text text-3xl font-black text-transparent">
                   {attendancePercentage}%
                 </span>
               </div>
 
-              <div className="w-full bg-gray-100 rounded-full h-4 overflow-hidden shadow-inner">
+              <div className="h-4 w-full overflow-hidden rounded-full border border-gray-300 bg-gray-200 shadow-inner">
                 <div
-                  className="bg-gradient-to-r from-purple-500 to-green-500 h-4 rounded-full transition-all duration-1000 ease-out"
+                  className="h-4 rounded-full bg-gradient-to-r from-brand-purple-deep to-brand-blue transition-all duration-1000 ease-out"
                   style={{ width: `${attendancePercentage}%` }}
                 ></div>
               </div>
-              <p className="text-sm text-gray-500 mt-4 font-medium">
+              <p className="mt-4 text-sm font-medium text-gray-500">
                 Você precisa de 70% de presença para garantir o certificado geral.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={160}>
-            <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-              <h2 className="text-lg font-bold text-gray-800 mb-6 tracking-wide">Atividades Validadas</h2>
+            <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-[0_18px_42px_rgba(25,40,32,0.14)]">
+              <h2 className="mb-6 text-lg font-bold tracking-wide text-gray-900">Atividades Validadas</h2>
 
               <div className="space-y-4">
                 {attendedActivities.length > 0 ? (
                   attendedActivities.map((activity) => (
-                    <div key={activity.id} className="relative overflow-hidden flex items-center justify-between p-4 pl-6 border border-gray-100 rounded-xl bg-gray-50 hover:bg-white hover:shadow-md transition">
-                      <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-purple-400 to-green-400" />
+                    <div key={activity.id} className="relative flex items-center justify-between overflow-hidden rounded-lg border border-gray-200 bg-brand-light p-4 pl-6 transition hover:border-brand-green/40 hover:bg-white hover:shadow-sm">
+                      <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-brand-purple to-brand-blue" />
                       <div>
                         <h3 className="font-bold text-gray-900">{activity.events.title}</h3>
                         <p className="text-sm text-gray-500">{activity.events.time_display}</p>
                       </div>
-                      <span className="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+                      <span className="rounded-full border border-brand-green/30 bg-brand-green/10 px-3 py-1 text-xs font-bold tracking-wide text-brand-green">
                         Presente
                       </span>
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8 text-gray-400 font-medium border-2 border-dashed border-gray-200 rounded-xl">
+                  <div className="rounded-xl border-2 border-dashed border-gray-200 py-8 text-center font-medium text-gray-500">
                     Você ainda não possui presenças registradas.
                   </div>
                 )}
@@ -230,12 +229,12 @@ export default function ParticipantDashboard() {
           onClick={() => setIsZoomed(false)}
         >
           <div
-            className="relative bg-white rounded-3xl p-8 max-w-sm w-full flex flex-col items-center shadow-[0_0_80px_-10px_rgba(74,222,128,0.4)]"
+            className="relative flex w-full max-w-sm flex-col items-center rounded-xl border border-gray-200 bg-white p-8 shadow-[0_0_80px_-10px_rgba(7,212,106,0.24)]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setIsZoomed(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition"
+              className="absolute right-4 top-4 text-gray-400 transition hover:text-gray-900"
               aria-label="Fechar"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -243,7 +242,7 @@ export default function ParticipantDashboard() {
               </svg>
             </button>
 
-            <h2 className="text-lg font-bold text-gray-800 mb-6">Credencial de Acesso</h2>
+            <h2 className="mb-6 text-lg font-bold text-gray-900">Credencial de Acesso</h2>
 
             {userId && (
               <QRCode
@@ -254,7 +253,7 @@ export default function ParticipantDashboard() {
               />
             )}
 
-            <p className="text-sm text-gray-500 font-medium mt-6 text-center">
+            <p className="mt-6 text-center text-sm font-medium text-gray-500">
               Aproxime esta tela do leitor para registrar presença.
             </p>
           </div>

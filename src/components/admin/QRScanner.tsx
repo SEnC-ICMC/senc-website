@@ -70,7 +70,7 @@ export default function QRScanner({ eventId, onAttendanceRegistered }: QRScanner
     const { data: participant, error: lookupError } = await supabase
       .from('participants')
       .select('name')
-      .eq('uuid', decodedText)
+      .eq('id', decodedText)
       .single();
 
     if (lookupError || !participant) {
