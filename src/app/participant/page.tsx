@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase/client';
 import QRCode from 'react-qr-code';
 import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal';
+import { DEFAULT_ATTENDANCE_EVENT_TYPES, isAttendanceEventType } from '@/lib/attendance';
 
 interface AttendedEvent {
   id: string;
@@ -33,7 +34,7 @@ export default function ParticipantDashboard() {
         setUserEmail(user.email || '');
         setUserId(user.id);
 
-        const { count: totalEvents } = await supabase.from('events').select('*', { count: 'exact', head: true });
+        const { data: eventsData } = await supabase.from('events').select('event_type');
         const { data: attendanceData } = await supabase.from('attendance').select(`id, events (id, title, time_display, event_type)`).eq('participant_id', user.id);
         const { data: participantRow } = await supabase.from('participants').select('is_admin').eq('id', user.id).single();
 
@@ -41,10 +42,16 @@ export default function ParticipantDashboard() {
 
 
         if (attendanceData) {
-          const formattedData = attendanceData as unknown as AttendedEvent[];
+          const formattedData = (attendanceData as unknown as AttendedEvent[]).filter((attendance) => (
+            attendance.events && isAttendanceEventType(attendance.events.event_type, DEFAULT_ATTENDANCE_EVENT_TYPES)
+          ));
+          const totalAttendanceEvents = (eventsData ?? []).filter((event) => (
+            isAttendanceEventType(event.event_type, DEFAULT_ATTENDANCE_EVENT_TYPES)
+          )).length;
+
           setAttendedActivities(formattedData);
-          if (totalEvents && totalEvents > 0) {
-            setAttendancePercentage(Math.round((formattedData.length / totalEvents) * 100));
+          if (totalAttendanceEvents > 0) {
+            setAttendancePercentage(Math.round((formattedData.length / totalAttendanceEvents) * 100));
           }
         }
       } else {

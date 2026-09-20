@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { supabase } from '@/lib/supabase/client';
+import { isNetworkingEventType } from '@/lib/attendance';
 
 type ScanStatus =
   | 'idle'
@@ -17,13 +18,14 @@ type ScanStatus =
 
 interface QRScannerProps {
   eventId: number;
+  eventType: string;
   onAttendanceRegistered?: () => void;
 }
 
 const READER_ELEMENT_ID = 'qr-reader';
 const RESUME_DELAY_MS = 2200;
 
-export default function QRScanner({ eventId, onAttendanceRegistered }: QRScannerProps) {
+export default function QRScanner({ eventId, eventType, onAttendanceRegistered }: QRScannerProps) {
   const [status, setStatus] = useState<ScanStatus>('idle');
   const [message, setMessage] = useState<string>('');
   const [isActive, setIsActive] = useState(false);
@@ -34,6 +36,11 @@ export default function QRScanner({ eventId, onAttendanceRegistered }: QRScanner
   useEffect(() => {
     eventIdRef.current = eventId;
   }, [eventId]);
+
+  const eventTypeRef = useRef(eventType);
+  useEffect(() => {
+    eventTypeRef.current = eventType;
+  }, [eventType]);
 
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const hasStartedRef = useRef(false);
@@ -69,7 +76,7 @@ export default function QRScanner({ eventId, onAttendanceRegistered }: QRScanner
 
     const { data: participant, error: lookupError } = await supabase
       .from('participants')
-      .select('name')
+      .select('name, email')
       .eq('id', decodedText)
       .single();
 
@@ -78,6 +85,44 @@ export default function QRScanner({ eventId, onAttendanceRegistered }: QRScanner
       setMessage('QR code não corresponde a nenhum participante cadastrado.');
       scheduleResume();
       return;
+    }
+
+    if (isNetworkingEventType(eventTypeRef.current)) {
+      const normalizedEmail = participant.email.trim();
+      const { data: ticketByEmail, error: emailLookupError } = await supabase
+        .from('networking_tickets')
+        .select('id')
+        .ilike('email', normalizedEmail)
+        .maybeSingle();
+
+      if (emailLookupError) {
+        setStatus('error');
+        setMessage('Erro ao verificar o ingresso de networking. Tente novamente.');
+        scheduleResume();
+        return;
+      }
+
+      if (!ticketByEmail) {
+        const { data: ticketByName, error: nameLookupError } = await supabase
+          .from('networking_tickets')
+          .select('id')
+          .ilike('name', participant.name.trim())
+          .maybeSingle();
+
+        if (nameLookupError) {
+          setStatus('error');
+          setMessage('Erro ao verificar o ingresso de networking. Tente novamente.');
+          scheduleResume();
+          return;
+        }
+
+        if (!ticketByName) {
+          setStatus('not_found');
+          setMessage('Este participante não possui ingresso para o evento de networking.');
+          scheduleResume();
+          return;
+        }
+      }
     }
 
     const { error: insertError } = await supabase

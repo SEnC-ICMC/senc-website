@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
+import { isNetworkingEventType } from '@/lib/attendance';
 
 interface AttendanceRecord {
   id: string;
@@ -21,6 +22,7 @@ interface TargetEvent {
 
 interface AttendanceListProps {
   eventId: number;
+  eventType: string;
   refreshToken: number;
 }
 
@@ -33,7 +35,7 @@ function formatCheckInTime(timestamp: string | null) {
   }).format(new Date(timestamp));
 }
 
-export default function AttendanceList({ eventId, refreshToken }: AttendanceListProps) {
+export default function AttendanceList({ eventId, eventType, refreshToken }: AttendanceListProps) {
   const [attendance, setAttendance] = useState<AttendanceRecord[]>([]);
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +47,7 @@ export default function AttendanceList({ eventId, refreshToken }: AttendanceList
   const [copyTargetId, setCopyTargetId] = useState('');
   const [isCopying, setIsCopying] = useState(false);
   const [copyMessage, setCopyMessage] = useState('');
+  const isNetworkingEvent = isNetworkingEventType(eventType);
 
   useEffect(() => {
     let isCurrent = true;
@@ -185,13 +188,15 @@ export default function AttendanceList({ eventId, refreshToken }: AttendanceList
         </div>
 
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:items-end">
-          <button
-            type="button"
-            onClick={handleOpenCopyPanel}
-            className="rounded-lg border border-blue-400/40 px-4 py-2.5 text-sm font-bold text-blue-300 transition hover:bg-blue-400/10"
-          >
-            {isCopyPanelOpen ? 'Fechar cópia' : 'Copiar presença'}
-          </button>
+          {!isNetworkingEvent && (
+            <button
+              type="button"
+              onClick={handleOpenCopyPanel}
+              className="rounded-lg border border-blue-400/40 px-4 py-2.5 text-sm font-bold text-blue-300 transition hover:bg-blue-400/10"
+            >
+              {isCopyPanelOpen ? 'Fechar cópia' : 'Copiar presença'}
+            </button>
+          )}
           <label className="relative block w-full sm:max-w-xs">
             <span className="sr-only">Buscar participante</span>
             <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-500">⌕</span>
@@ -206,7 +211,7 @@ export default function AttendanceList({ eventId, refreshToken }: AttendanceList
         </div>
       </div>
 
-      {isCopyPanelOpen && (
+      {isCopyPanelOpen && !isNetworkingEvent && (
         <div className="mt-6 rounded-xl border border-blue-400/25 bg-blue-400/[0.06] p-4 sm:p-5">
           <p className="font-bold text-white">Levar esta lista para outra palestra</p>
           <p className="mt-1 text-sm leading-relaxed text-gray-400">

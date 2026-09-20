@@ -7,15 +7,22 @@ import QRScanner from '@/components/admin/QRScanner';
 import AttendanceList from '@/components/admin/AttendanceList';
 import NetworkBackground from '@/components/admin/NetworkBackground';
 
+const ADMIN_PERMISSION_CHECK_INTERVAL_MS = 30_000;
+
 export default function AdminDashboard() {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const [selectedEventType, setSelectedEventType] = useState('');
   const [attendanceRefreshToken, setAttendanceRefreshToken] = useState(0);
 
   useEffect(() => {
+    let isActive = true;
+
     const checkAdminAccess = async () => {
       const { data: { user } } = await supabase.auth.getUser();
+
+      if (!isActive) return;
 
       if (!user) {
         window.location.href = '/participant/new-registration';
@@ -28,6 +35,8 @@ export default function AdminDashboard() {
         .eq('id', user.id)
         .single();
 
+      if (!isActive) return;
+
       if (error || !participant?.is_admin) {
         window.location.href = '/participant';
         return;
@@ -38,6 +47,12 @@ export default function AdminDashboard() {
     };
 
     checkAdminAccess();
+    const permissionCheckInterval = setInterval(checkAdminAccess, ADMIN_PERMISSION_CHECK_INTERVAL_MS);
+
+    return () => {
+      isActive = false;
+      clearInterval(permissionCheckInterval);
+    };
   }, []);
 
   if (isLoading || !isAuthorized) {
@@ -78,7 +93,13 @@ export default function AdminDashboard() {
                 <h2 className="font-display mt-2 text-xl font-bold uppercase tracking-wide text-white">Sessão ativa</h2>
               </div>
             </div>
-            <EventPicker selectedEventId={selectedEventId} onSelectEvent={setSelectedEventId} />
+            <EventPicker
+              selectedEventId={selectedEventId}
+              onSelectEvent={(eventId, eventType) => {
+                setSelectedEventId(eventId);
+                setSelectedEventType(eventType);
+              }}
+            />
           </section>
 
           {selectedEventId && (
@@ -91,6 +112,7 @@ export default function AdminDashboard() {
               </div>
               <QRScanner
                 eventId={selectedEventId}
+                eventType={selectedEventType}
                 onAttendanceRegistered={() => setAttendanceRefreshToken((token) => token + 1)}
               />
             </section>
@@ -103,7 +125,11 @@ export default function AdminDashboard() {
                 <span className="h-px flex-1 bg-white/10" />
                 <span className="hidden text-xs text-gray-500 sm:inline">Atualizado após cada leitura</span>
               </div>
-              <AttendanceList eventId={selectedEventId} refreshToken={attendanceRefreshToken} />
+              <AttendanceList
+                eventId={selectedEventId}
+                eventType={selectedEventType}
+                refreshToken={attendanceRefreshToken}
+              />
             </section>
           )}
         </div>
