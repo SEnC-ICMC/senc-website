@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase/client';
+import { ADMIN_ATTENDANCE_EVENT_TYPES, isAttendanceEventType } from '@/lib/attendance';
 
 interface EventRow {
   id: number;
@@ -17,15 +18,10 @@ interface EventRow {
 
 interface EventPickerProps {
   selectedEventId: number | null;
-  onSelectEvent: (eventId: number) => void;
+  onSelectEvent: (eventId: number, eventType: string) => void;
 }
 
 type EventStatus = 'now' | 'upcoming' | 'past';
-
-// Only events with one of these types are shown for check-in — other types
-// (e.g. coffee breaks, opening/closing ceremonies) don't track attendance.
-// Add/remove strings here to control what shows up in the picker.
-const ATTENDANCE_EVENT_TYPES = ['Palestra'];
 
 function getEventStatus(event: EventRow, now: Date): EventStatus {
   const start = new Date(event.starts_at);
@@ -62,18 +58,17 @@ export default function EventPicker({ selectedEventId, onSelectEvent }: EventPic
 
       if (!error && data) {
 
-        const rows = data.filter((e) => ATTENDANCE_EVENT_TYPES.includes(e.event_type)) as EventRow[];
+        const rows = data.filter((e) => isAttendanceEventType(e.event_type, ADMIN_ATTENDANCE_EVENT_TYPES)) as EventRow[];
         setEvents(rows);
 
         // Default selection on first load only: prefer whatever is
         // happening right now, otherwise the soonest upcoming event.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         if (selectedEventId === null) {
           const now = new Date();
           const current = rows.find((e) => getEventStatus(e, now) === 'now');
           const nextUpcoming = rows.find((e) => getEventStatus(e, now) === 'upcoming');
           const defaultEvent = current || nextUpcoming;
-          if (defaultEvent) onSelectEvent(defaultEvent.id);
+          if (defaultEvent) onSelectEvent(defaultEvent.id, defaultEvent.event_type);
         }
       }
       setIsLoading(false);
@@ -135,7 +130,7 @@ export default function EventPicker({ selectedEventId, onSelectEvent }: EventPic
                 return (
                   <button
                     key={event.id}
-                    onClick={() => onSelectEvent(event.id)}
+                    onClick={() => onSelectEvent(event.id, event.event_type)}
                     className={`group w-full rounded-xl border p-4 text-left shadow-sm transition sm:p-5 ${
                       isSelected
                         ? 'border-green-400/80 bg-green-400/10 text-white shadow-[0_0_24px_-14px_rgba(7,212,106,0.9)]'

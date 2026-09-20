@@ -23,6 +23,8 @@ interface Event {
   event_day: string;
   time_display: string;
   color_theme: string;
+  starts_at: string | null;
+  ends_at: string | null;
 }
 
 const EVENT_TAG_STYLES: Record<string, string> = {
@@ -39,20 +41,47 @@ function getEventTagStyle(eventType: string) {
 
 // The navigation tabs (These stay static to define the week's dates)
 const days = [
-  { id: 'segunda', label: 'SEG', date: '21 Set' },
-  { id: 'terca', label: 'TER', date: '22 Set' },
-  { id: 'quarta', label: 'QUA', date: '23 Set' },
-  { id: 'quinta', label: 'QUI', date: '24 Set' },
-  { id: 'sexta', label: 'SEX', date: '25 Set' },
+  { id: 'segunda', label: 'SEG', date: '21 Set', dateKey: '2026-09-21' },
+  { id: 'terca', label: 'TER', date: '22 Set', dateKey: '2026-09-22' },
+  { id: 'quarta', label: 'QUA', date: '23 Set', dateKey: '2026-09-23' },
+  { id: 'quinta', label: 'QUI', date: '24 Set', dateKey: '2026-09-24' },
+  { id: 'sexta', label: 'SEX', date: '25 Set', dateKey: '2026-09-25' },
 ];
 
+function getLocalDateKey(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getInitialDay() {
+  return days.find((day) => day.dateKey === getLocalDateKey(new Date()))?.id || days[0].id;
+}
+
+function isEventLive(event: Event, now: Date) {
+  if (!event.starts_at || !event.ends_at) return false;
+
+  const startsAt = new Date(event.starts_at);
+  const endsAt = new Date(event.ends_at);
+  return now >= startsAt && now <= endsAt;
+}
+
 export default function Programacao() {
-  const [activeDay, setActiveDay] = useState('segunda');
+  const [activeDay, setActiveDay] = useState(() => (
+    typeof window === 'undefined' ? 'segunda' : getInitialDay()
+  ));
   const [eventsData, setEventsData] = useState<Record<string, Event[]>>({
     segunda: [], terca: [], quarta: [], quinta: [], sexta: []
   });
   const [isLoading, setIsLoading] = useState(true);
   const [expandedEventId, setExpandedEventId] = useState<number | null>(null);
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Fetch data from Supabase on component mount
   useEffect(() => {
@@ -60,7 +89,7 @@ export default function Programacao() {
       const { data, error } = await supabase
         .from('events')
         .select('*')
-        .order('id', { ascending: true }); // Keeps chronological order
+        .order('starts_at', { ascending: true });
 
       if (error) {
         console.error("Erro ao buscar eventos:", JSON.stringify(error, null, 2));
@@ -130,6 +159,7 @@ export default function Programacao() {
         ) : currentEvents.length > 0 ? (
           <div className="space-y-6">
             {currentEvents.map((event) => {
+              const isLive = isEventLive(event, now);
               const hasEventDetails = [
                 event.description,
                 event.speaker_url,
@@ -147,7 +177,15 @@ export default function Programacao() {
                   </div>
 
                   <div className="min-w-0 flex-grow">
-                    <h3 className="mb-1 text-xl font-bold text-gray-900">{event.title}</h3>
+                    <div className="mb-1 flex flex-wrap items-center gap-3">
+                      <h3 className="text-xl font-bold text-gray-900">{event.title}</h3>
+                      {isLive && (
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-red-500 px-2.5 py-1 text-xs font-black uppercase tracking-wider text-white">
+                          <span className="h-2 w-2 animate-pulse rounded-full bg-white" aria-hidden="true" />
+                          Ao vivo
+                        </span>
+                      )}
+                    </div>
                     {event.speaker && (
                       <p className="mb-2 font-medium text-gray-600">{event.speaker}</p>
                     )}
@@ -166,7 +204,9 @@ export default function Programacao() {
               return (
                 <article
                   key={event.id}
-                  className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+                  className={`overflow-hidden rounded-2xl border bg-white shadow-sm transition-shadow hover:shadow-md ${
+                    isLive ? 'border-brand-green shadow-lg shadow-brand-green/20 ring-2 ring-brand-green/30' : 'border-gray-200'
+                  }`}
                 >
                   {hasEventDetails ? (
                     <button
