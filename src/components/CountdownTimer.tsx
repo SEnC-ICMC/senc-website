@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 // Adjust if the real opening time differs from midnight local time.
-const EVENT_START = new Date('2026-09-20T00:00:00-03:00');
+const EVENT_START = new Date('2026-09-21T00:08:30-03:00');
 
 interface TimeLeft {
   days: number;
